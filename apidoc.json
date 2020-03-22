@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "description": "小微商城 - 完整的微信电商项目",
   "title": "小微商城",
-  "url" : "https://localhost:8080/api"
+  "url" : "https://localhost:8080/v1/api"
 }

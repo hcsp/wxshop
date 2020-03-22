@@ -93,11 +93,13 @@ public class GoodsController {
      *              "imgUrl": "https://img.url",
      *              "price": 500,
      *              "stock": 10,
+     *              "shopId": 12345,
      *              "createdAt": "2020-03-22T13:22:03Z",
      *              "updatedAt": "2020-03-22T13:22:03Z"
      *       }
      *     }
      *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
      * @apiError 401 Unauthorized 若用户未登录
      * @apiError 403 Forbidden 若用户尝试创建非自己管理店铺的商品
      *
@@ -149,8 +151,10 @@ public class GoodsController {
      *       }
      *     }
      *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
      * @apiError 401 Unauthorized 若用户未登录
      * @apiError 403 Forbidden 若用户尝试修改非自己管理店铺的商品
+     * @apiError 404 Not Found 若商品未找到
      *
      * @apiErrorExample Error-Response:
      *     HTTP/1.1 401 Unauthorized
@@ -175,7 +179,7 @@ public class GoodsController {
      * @apiSuccess {Goods} data 被删除的商品
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
+     *     HTTP/1.1 204 No Content
      *     {
      *       "data": {
      *              "id": 12345,
@@ -190,8 +194,10 @@ public class GoodsController {
      *       }
      *     }
      *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
      * @apiError 401 Unauthorized 若用户未登录
      * @apiError 403 Forbidden 若用户尝试删除非自己管理店铺的商品
+     * @apiError 404 Not Found 若商品未找到
      *
      * @apiErrorExample Error-Response:
      *     HTTP/1.1 401 Unauthorized

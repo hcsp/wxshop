@@ -72,7 +72,7 @@ public class ShopController {
      *          }
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
+     *     HTTP/1.1 201 Created
      *     {
      *       "data": {
      *              "id": 12345,
@@ -85,6 +85,7 @@ public class ShopController {
      *       }
      *     }
      *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
      * @apiError 401 Unauthorized 若用户未登录
      *
      * @apiErrorExample Error-Response:
@@ -127,6 +128,8 @@ public class ShopController {
      *       }
      *     }
      *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
+     * @apiError 404 Not Found 若店铺未找到
      * @apiError 401 Unauthorized 若用户未登录
      * @apiError 403 Forbidden 若用户尝试修改非自己管理店铺
      *
@@ -143,7 +146,7 @@ public class ShopController {
     // @formatter:off
     /**
      * @api {DELETE} /shop/:id 删除店铺
-     * @apiName UpdateShop
+     * @apiName DeleteShop
      * @apiGroup 店铺
      *
      * @apiHeader {String} Accept application/json
@@ -151,7 +154,7 @@ public class ShopController {
      * @apiParam {Number} id 店铺ID
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
+     *     HTTP/1.1 204 No Content
      *     {
      *       "data": {
      *              "id": 12345,
@@ -164,6 +167,8 @@ public class ShopController {
      *       }
      *     }
      *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
+     * @apiError 404 Not Found 若店铺未找到
      * @apiError 401 Unauthorized 若用户未登录
      * @apiError 403 Forbidden 若用户尝试删除非自己管理店铺
      *
