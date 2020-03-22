@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.service;
 
-import com.hcsp.wxshop.AuthController;
+import com.hcsp.wxshop.controller.AuthController;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;

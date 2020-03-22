@@ -1,4 +1,4 @@
-package com.hcsp.wxshop;
+package com.hcsp.wxshop.controller;
 
 import com.hcsp.wxshop.generate.User;
 import com.hcsp.wxshop.service.AuthService;

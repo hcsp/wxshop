@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.service;
 
-import com.hcsp.wxshop.AuthController;
+import com.hcsp.wxshop.controller.AuthController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
