@@ -89,6 +89,7 @@ public class OrderController {
      * @apiGroup 订单
      *
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      * @apiParamExample {json} Request-Example:
      *            {
      *              "goods": [
@@ -162,6 +163,7 @@ public class OrderController {
      * @apiGroup 订单
      *
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      *
      * @apiParam {Number} id 订单ID
      * @apiParamExample {json} Request-Example:

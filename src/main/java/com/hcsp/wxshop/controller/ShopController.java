@@ -63,6 +63,7 @@ public class ShopController {
      * @apiGroup 店铺
      *
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      * @apiParamExample {json} Request-Example:
      *          {
      *              "id": 12345,
@@ -106,6 +107,7 @@ public class ShopController {
      *
      * @apiParam {Number} id 店铺ID
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      * @apiParamExample {json} Request-Example:
      *          {
      *              "id": 12345,

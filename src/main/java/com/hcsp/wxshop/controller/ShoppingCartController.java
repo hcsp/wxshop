@@ -79,6 +79,7 @@ public class ShoppingCartController {
      * @apiGroup 购物车
      *
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      * @apiParamExample {json} Request-Example:
      *            {
      *              "goods": [
@@ -148,6 +149,7 @@ public class ShoppingCartController {
      * @apiGroup 购物车
      *
      * @apiHeader {String} Accept application/json
+     *
      * @apiParam {Number} goodsId 要删除的商品ID
      *
      * @apiSuccess {ShoppingCart} data 更新后的该店铺物品列表

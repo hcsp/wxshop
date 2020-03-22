@@ -67,6 +67,7 @@ public class GoodsController {
      * @apiGroup 商品
      *
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      *
      * @apiParamExample {json} Request-Example:
      *          {
@@ -120,6 +121,7 @@ public class GoodsController {
      * @apiGroup 商品
      *
      * @apiHeader {String} Accept application/json
+     * @apiHeader {String} Content-Type application/json
      *
      * @apiParam {Number} id 商品ID
      * @apiParamExample {json} Request-Example:
