@@ -20,4 +20,8 @@ public class Response<T> {
     public T getData() {
         return data;
     }
+
+    public String getMessage() {
+        return message;
+    }
 }
