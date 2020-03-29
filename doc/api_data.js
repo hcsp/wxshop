@@ -14,6 +14,13 @@ define({ "api": [
             "optional": false,
             "field": "Accept",
             "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
           }
         ]
       }
@@ -300,6 +307,13 @@ define({ "api": [
             "optional": false,
             "field": "Accept",
             "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
           }
         ]
       }
@@ -399,6 +413,13 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "Accept",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
             "description": "<p>application/json</p>"
           }
         ]
@@ -671,6 +692,13 @@ define({ "api": [
             "optional": false,
             "field": "Accept",
             "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
           }
         ]
       }
@@ -739,6 +767,13 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "Accept",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
             "description": "<p>application/json</p>"
           }
         ]
@@ -1016,6 +1051,13 @@ define({ "api": [
             "optional": false,
             "field": "Accept",
             "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
           }
         ]
       }
@@ -1115,6 +1157,13 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "Accept",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
             "description": "<p>application/json</p>"
           }
         ]

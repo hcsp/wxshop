@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.service;
 
-import com.hcsp.wxshop.UserDao;
+import com.hcsp.wxshop.dao.UserDao;
 import com.hcsp.wxshop.generate.User;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Service;

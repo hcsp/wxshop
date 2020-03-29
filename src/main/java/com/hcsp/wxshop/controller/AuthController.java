@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.wxshop.generate.User;
+import com.hcsp.wxshop.entity.LoginResponse;
 import com.hcsp.wxshop.service.AuthService;
 import com.hcsp.wxshop.service.TelVerificationService;
 import com.hcsp.wxshop.service.UserContext;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api")
@@ -55,8 +54,11 @@ public class AuthController {
 
     @GetMapping("/status")
     public Object loginStatus() {
-        User user = UserContext.getCurrentUser();
-        return user == null ? new HashMap<>() : user;
+        if (UserContext.getCurrentUser() == null) {
+            return LoginResponse.notLogin();
+        } else {
+            return LoginResponse.login(UserContext.getCurrentUser());
+        }
     }
 
     public static class TelAndCode {

@@ -1,4 +1,4 @@
-package com.hcsp.wxshop;
+package com.hcsp.wxshop.dao;
 
 import com.hcsp.wxshop.generate.User;
 import com.hcsp.wxshop.generate.UserExample;
