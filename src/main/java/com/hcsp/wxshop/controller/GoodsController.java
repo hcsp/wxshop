@@ -128,7 +128,9 @@ public class GoodsController {
      *     {
      *       "message": "Unauthorized"
      *     }
-     *
+     */
+
+     /**
      * @param goods goods to be created
      * @param response the HTTP response
      * @return the newly created goods
@@ -244,7 +246,9 @@ public class GoodsController {
      *     {
      *       "message": "Unauthorized"
      *     }
-     *
+     */
+
+    /**
      * @param goodsId the goods id to be deleted
      * @param response the HTTP response
      * @return the deleted goods
