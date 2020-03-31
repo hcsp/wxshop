@@ -51,6 +51,10 @@ public class AuthController {
      *       "message": "Bad Request"
      *     }
      */
+    /**
+     * @param telAndCode 手机号和收到的验证码
+     * @param response HTTP response
+     */
     @PostMapping("/code")
     public void code(@RequestBody TelAndCode telAndCode,
                      HttpServletResponse response) {
@@ -87,6 +91,9 @@ public class AuthController {
      *     {
      *       "message": "Bad Request"
      *     }
+     */
+    /**
+     * @param telAndCode 手机号
      */
     @PostMapping("/login")
     public void login(@RequestBody TelAndCode telAndCode) {
@@ -151,6 +158,9 @@ public class AuthController {
      *     {
      *       "message": "Unauthorized"
      *     }
+     */
+    /**
+     * @return 登录状态
      */
     @GetMapping("/status")
     public Object loginStatus() {
