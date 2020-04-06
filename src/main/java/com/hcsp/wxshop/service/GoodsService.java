@@ -19,23 +19,23 @@ public class GoodsService {
     }
 
     public Goods createGoods(Goods goods) {
-        Shop shop = shopDao.findShopById(goods.getShopId());
-
-        if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
+//        Shop shop = shopDao.findShopById(goods.getShopId());
+//
+//        if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
             return goodsDao.insertGoods(goods);
-        } else {
-            throw new NotAuthorizedForShopException("无权访问！");
-        }
+//        } else {
+//            throw new NotAuthorizedForShopException("无权访问！");
+//        }
     }
 
     public Goods deleteGoodsById(Long goodsId) {
-        Shop shop = shopDao.findShopById(goodsId);
+//        Shop shop = shopDao.findShopById(goodsId);
 
-        if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
+//        if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
             return goodsDao.deleteGoodsById(goodsId);
-        } else {
-            throw new NotAuthorizedForShopException("无权访问！");
-        }
+//        } else {
+//            throw new NotAuthorizedForShopException("无权访问！");
+//        }
     }
 
     public static class NotAuthorizedForShopException extends RuntimeException {
