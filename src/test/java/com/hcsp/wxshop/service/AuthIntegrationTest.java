@@ -20,7 +20,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 public class AuthIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void loginLogoutTest() throws JsonProcessingException {
-        String sessionId = loginAndGetCookie();
+        String sessionId = loginAndGetCookie().cookie;
 
         // 带着Cookie访问 /api/v1/status 应该处于登录状态
         String statusResponse = doHttpRequest("/api/v1/status", "GET", null, sessionId).body;

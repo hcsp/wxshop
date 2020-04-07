@@ -1,15 +1,19 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.wxshop.dao.GoodsDao;
+import com.hcsp.wxshop.entity.HttpException;
+import com.hcsp.wxshop.entity.PageResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -75,8 +79,20 @@ public class GoodsController {
      *       "message": "Unauthorized"
      *     }
      */
+    /**
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param shopId
+     * @return 查询到的结果
+     */
     // @formatter:on
-    public void getGoods() {
+    @GetMapping("/goods")
+    public @ResponseBody
+    PageResponse<Goods> getGoods(@RequestParam("pageNum") Integer pageNum,
+                                 @RequestParam("pageSize") Integer pageSize,
+                                 @RequestParam(value = "shopId", required = false) Integer shopId) {
+        return goodsService.getGoods(pageNum, pageSize, shopId);
     }
 
     // @formatter:off
@@ -136,17 +152,17 @@ public class GoodsController {
      * @return the newly created goods
      */
     // @formatter:on
-    @PostMapping("/goods")
-    public Response<Goods> createdGoods(@RequestBody Goods goods, HttpServletResponse response) {
-        clean(goods);
-        response.setStatus(HttpServletResponse.SC_CREATED);
-        try {
-            return Response.of(goodsService.createGoods(goods));
-        } catch (GoodsService.NotAuthorizedForShopException e) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return Response.of(e.getMessage(), null);
-        }
-    }
+     @PostMapping("/goods")
+     public Response<Goods> createdGoods(@RequestBody Goods goods, HttpServletResponse response) {
+         clean(goods);
+         response.setStatus(HttpServletResponse.SC_CREATED);
+         try {
+             return Response.of(goodsService.createGoods(goods));
+         } catch (HttpException e) {
+             response.setStatus(e.getStatusCode());
+             return Response.of(e.getMessage(), null);
+         }
+     }
 
     private void clean(Goods goods) {
         goods.setId(null);
@@ -204,8 +220,20 @@ public class GoodsController {
      *       "message": "Unauthorized"
      *     }
      */
+    /**
+     *
+     * @param goods
+     * @param response
+     * @return 更新后的结果
+     */
     // @formatter:on
-    public void updateGoods() {
+    public Response<Goods> updateGoods(Goods goods, HttpServletResponse response) {
+        try {
+            return Response.of(goodsService.updateGoods(goods));
+        } catch (HttpException e) {
+            response.setStatus(e.getStatusCode());
+            return Response.of(e.getMessage(), null);
+        }
     }
 
     // @formatter:off
@@ -259,11 +287,8 @@ public class GoodsController {
         try {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return Response.of(goodsService.deleteGoodsById(goodsId));
-        } catch (GoodsService.NotAuthorizedForShopException e) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return Response.of(e.getMessage(), null);
-        } catch (GoodsDao.ResourceNotFoundException e) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } catch (HttpException e) {
+            response.setStatus(e.getStatusCode());
             return Response.of(e.getMessage(), null);
         }
     }

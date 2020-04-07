@@ -6,6 +6,7 @@
 <generatorConfiguration>
     <context id="wxshop" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin" />
+        <plugin type="com.qiukeke.mybatis.plugins.MySQLLimitPlugin" />
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/wxshop?useSSL=false&amp;allowPublicKeyRetrieval=true"
                         userId="root"
