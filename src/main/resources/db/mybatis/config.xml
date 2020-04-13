@@ -6,11 +6,17 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
+    <typeAliases>
+        <typeAlias type="com.hcsp.wxshop.entity.ShoppingCartData" alias="ShoppingCartData"/>
+        <typeAlias type="com.hcsp.wxshop.entity.ShoppingCartGoods" alias="ShoppingCartGoods"/>
+        <typeAlias type="com.hcsp.wxshop.generate.Shop" alias="Shop"/>
+    </typeAliases>
     <mappers>
         <mapper resource="db/mybatis/UserMapper.xml"/>
         <mapper resource="db/mybatis/ShopMapper.xml"/>
         <mapper resource="db/mybatis/GoodsMapper.xml"/>
         <mapper resource="db/mybatis/OrderMapper.xml"/>
         <mapper resource="db/mybatis/ShoppingCartMapper.xml"/>
+        <mapper resource="db/mybatis/ShoppingCartQuery.xml"/>
     </mappers>
 </configuration>
