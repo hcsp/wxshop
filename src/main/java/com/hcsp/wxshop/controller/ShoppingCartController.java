@@ -1,6 +1,8 @@
 package com.hcsp.wxshop.controller;
 
+import com.hcsp.wxshop.entity.HttpException;
 import com.hcsp.wxshop.entity.PageResponse;
+import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.entity.ShoppingCartData;
 import com.hcsp.wxshop.service.ShoppingCartService;
 import com.hcsp.wxshop.service.UserContext;
@@ -173,11 +175,18 @@ public class ShoppingCartController {
      *     }
      */
     /**
-     * @param request 参数
+     *
+     * @param request 加购物车请求
+     * @return 添加后的结果
      */
     // @formatter:on
     @PostMapping("/shoppingCart")
-    public void addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
+    public Response<ShoppingCartData> addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
+        try {
+            return Response.of(shoppingCartService.addToShoppingCart(request));
+        } catch (HttpException e) {
+            return Response.of(e.getMessage(), null);
+        }
     }
 
 

@@ -6,6 +6,7 @@
         from SHOPPING_CART
         where USER_ID = #{userId}
     </select>
+
     <select id="selectShoppingCartDataByUserId" resultMap="getShoppingCartResultMap" parameterType="Map">
         SELECT SHOP.ID              as SHOP_ID,
                SHOP.NAME            as SHOP_NAME,
@@ -34,6 +35,31 @@
                  JOIN SHOP on t1.SHOP_ID = SHOP.ID
 
     </select>
+
+    <select id="selectShoppingCartDataByUserIdShopId" resultMap="getShoppingCartResultMap" parameterType="Map">
+        SELECT SHOP.ID              as SHOP_ID,
+               SHOP.NAME            as SHOP_NAME,
+               SHOP.DESCRIPTION     as SHOP_DESCRIPTION,
+               SHOP.IMG_URL         as SHOP_IMG_URL,
+               SHOP.OWNER_USER_ID   as SHOP_OWNER_ID,
+               SHOP.CREATED_AT      as SHOP_CREATED_AT,
+               SHOP.UPDATED_AT      as SHOP_UPDATED_AT,
+               GOODS.ID             as GOODS_ID,
+               GOODS.NAME           as GOODS_NAME,
+               GOODS.DESCRIPTION    as GOODS_DESCRIPTION,
+               GOODS.DETAILS        as GOODS_DETAILS,
+               GOODS.IMG_URL        as GOODS_IMG_URL,
+               GOODS.PRICE          as GOODS_PRICE,
+               SHOPPING_CART.NUMBER as GOODS_NUMBER,
+               SHOPPING_CART.STATUS as GOODS_STATUS,
+               GOODS.CREATED_AT     as GOODS_CREATED_AT,
+               GOODS.UPDATED_AT     as GOODS_UPDATED_AT
+        FROM SHOPPING_CART
+                 JOIN GOODS on SHOPPING_CART.GOODS_ID = GOODS.ID
+                 JOIN SHOP on SHOPPING_CART.SHOP_ID = SHOP.ID
+        WHERE SHOPPING_CART.SHOP_ID = #{shopId}
+          AND SHOPPING_CART.USER_ID = #{userId}
+    </select>
     <resultMap id="getShoppingCartResultMap" type="ShoppingCartData">
         <association property="shop" javaType="Shop">
             <id property="id" column="SHOP_ID"/>
@@ -52,8 +78,10 @@
             <result property="imgUrl" column="GOODS_IMG_URL"/>
             <result property="price" column="GOODS_PRICE"/>
             <result property="number" column="GOODS_NUMBER"/>
+            <result property="shopId" column="SHOP_ID"/>
             <result property="createdAt" column="GOODS_CREATED_AT"/>
             <result property="updatedAt" column="GOODS_UPDATED_AT"/>
+            <result property="status" column="GOODS_STATUS"/>
         </collection>
     </resultMap>
 

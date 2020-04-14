@@ -15,4 +15,10 @@ public interface ShoppingCartQueryMapper {
             @Param("limit") int limit,
             @Param("offset") int offset
     );
+
+    List<ShoppingCartData> selectShoppingCartDataByUserIdShopId(
+            @Param("userId") long userId,
+            @Param("shopId") long shopId
+    );
+
 }
