@@ -25,11 +25,11 @@
         </repository>
     </repositories>
     <pluginRepositories>
-        <repository>
+        <pluginRepository>
             <id>alimaven</id>
             <name>aliyun maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
+        </pluginRepository>
     </pluginRepositories>     
 
     <dependencies>
