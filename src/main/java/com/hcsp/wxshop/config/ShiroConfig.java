@@ -18,12 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 @Configuration
 public class ShiroConfig implements WebMvcConfigurer {
@@ -38,8 +35,18 @@ public class ShiroConfig implements WebMvcConfigurer {
                 Object tel = SecurityUtils.getSubject().getPrincipal();
                 if (tel != null) {
                     userService.getUserByTel(tel.toString()).ifPresent(UserContext::setCurrentUser);
+                    return true;
+                } else if (Arrays.asList(
+                        "/api/v1/code",
+                        "/api/v1/login",
+                        "/api/v1/status",
+                        "/api/v1/logout"
+                ).contains(request.getRequestURI())) {
+                    return true;
+                } else {
+                    response.setStatus(401);
+                    return false;
                 }
-                return true;
             }
 
             @Override
@@ -50,22 +57,9 @@ public class ShiroConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, ShiroLoginFilter shiroLoginFilter) {
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-
-        Map<String, String> pattern = new HashMap<>();
-        pattern.put("/api/v1/code", "anon");
-        pattern.put("/api/v1/login", "anon");
-        pattern.put("/api/v1/status", "anon");
-        pattern.put("/api/v1/logout", "anon");
-        pattern.put("/**", "authc");
-
-        Map<String, Filter> filtersMap = new LinkedHashMap<>();
-        filtersMap.put("shiroLoginFilter", shiroLoginFilter);
-        shiroFilterFactoryBean.setFilters(filtersMap);
-
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(pattern);
         return shiroFilterFactoryBean;
     }
 
