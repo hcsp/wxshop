@@ -5,12 +5,14 @@ import com.hcsp.wxshop.service.UserContext;
 import com.hcsp.wxshop.service.UserService;
 import com.hcsp.wxshop.service.VerificationCodeCheckService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,6 +28,11 @@ import java.util.Arrays;
 public class ShiroConfig implements WebMvcConfigurer {
     @Autowired
     UserService userService;
+
+    @Value("${wxshop.redis.host}")
+    String redisHost;
+    @Value("${wxshop.redis.port}")
+    int redisPort;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -64,14 +71,23 @@ public class ShiroConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SecurityManager securityManager(ShiroRealm shiroRealm) {
+    public SecurityManager securityManager(ShiroRealm shiroRealm, RedisCacheManager cacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
         securityManager.setRealm(shiroRealm);
-        securityManager.setCacheManager(new MemoryConstrainedCacheManager());
+        securityManager.setCacheManager(cacheManager);
         securityManager.setSessionManager(new DefaultWebSessionManager());
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
+    }
+
+    @Bean
+    public RedisCacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(redisHost + ":" + redisPort);
+        redisCacheManager.setRedisManager(redisManager);
+        return redisCacheManager;
     }
 
     @Bean

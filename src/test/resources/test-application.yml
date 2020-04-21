@@ -6,3 +6,8 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
 mybatis:
   config-location: classpath:db/mybatis/config.xml
+
+wxshop:
+  redis:
+    host: 127.0.0.1
+    port: 6380
