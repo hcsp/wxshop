@@ -9,7 +9,9 @@ import com.hcsp.wxshop.service.UserContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -183,7 +185,7 @@ public class ShoppingCartController {
     @PostMapping("/shoppingCart")
     public Response<ShoppingCartData> addToShoppingCart(@RequestBody AddToShoppingCartRequest request) {
         try {
-            return Response.of(shoppingCartService.addToShoppingCart(request));
+            return Response.of(shoppingCartService.addToShoppingCart(request, UserContext.getCurrentUser().getId()));
         } catch (HttpException e) {
             return Response.of(e.getMessage(), null);
         }
@@ -278,8 +280,18 @@ public class ShoppingCartController {
      *     }
      */
     // @formatter:on
-    public void deleteShoppingCart() {
+
+    /**
+     *
+     * @param goodsId 要删除的商品id
+     * @return 更新后的该店铺数据
+     */
+    @DeleteMapping("/shoppingCart/{id}")
+    public Response<ShoppingCartData> deleteGoodsInShoppingCart(@PathVariable("id") Long goodsId) {
+        try {
+            return Response.of(shoppingCartService.deleteGoodsInShoppingCart(goodsId, UserContext.getCurrentUser().getId()));
+        } catch (HttpException e) {
+            return Response.of(e.getMessage(), null);
+        }
     }
-
-
 }
