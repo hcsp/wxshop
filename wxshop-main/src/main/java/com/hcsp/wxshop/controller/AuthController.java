@@ -1,9 +1,11 @@
 package com.hcsp.wxshop.controller;
 
+import com.hcsp.api.rpc.OrderService;
 import com.hcsp.wxshop.entity.LoginResponse;
 import com.hcsp.wxshop.service.AuthService;
 import com.hcsp.wxshop.service.TelVerificationService;
 import com.hcsp.wxshop.service.UserContext;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.http.HttpStatus;
@@ -159,11 +161,14 @@ public class AuthController {
      *       "message": "Unauthorized"
      *     }
      */
+    @Reference(version = "${wxshop.orderservice.version}")
+    OrderService orderService;
     /**
      * @return 登录状态
      */
     @GetMapping("/status")
     public Object loginStatus() {
+        System.out.println(orderService.sayHello("aaa"));
         if (UserContext.getCurrentUser() == null) {
             return LoginResponse.notLogin();
         } else {
