@@ -52,7 +52,8 @@ public class ShiroConfig implements WebMvcConfigurer {
                         "/api/v1/code",
                         "/api/v1/login",
                         "/api/v1/status",
-                        "/api/v1/logout"
+                        "/api/v1/logout",
+                        "/error"
                 ).contains(request.getRequestURI())) {
                     return true;
                 } else {
