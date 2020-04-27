@@ -6,7 +6,7 @@ CREATE TABLE GOODS
     DESCRIPTION VARCHAR(1024),
     DETAILS     TEXT,
     IMG_URL     VARCHAR(1024),
-    PRICE       DECIMAL,
+    PRICE       BIGINT, -- 单位 分
     STOCK       INT       NOT NULL DEFAULT 0,
     STATUS      VARCHAR(16), -- 'ok' 正常 'deleted' 已经删除
     CREATED_AT  TIMESTAMP NOT NULL DEFAULT NOW(),

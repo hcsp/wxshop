@@ -1,6 +1,11 @@
 spring:
   application:
     name: wxshop-order
+  datasource:
+    url: jdbc:mysql://localhost:3306/order?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
 
 wxshop:
   orderservice:
@@ -8,6 +13,9 @@ wxshop:
 
 server:
   port: 8081
+
+mybatis:
+  config-location: classpath:db/mybatis/config.xml
 
 dubbo:
   registry:

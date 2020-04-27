@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.api.rpc.OrderService;
+import com.hcsp.api.rpc.OrderRpcService;
 import com.hcsp.wxshop.entity.LoginResponse;
 import com.hcsp.wxshop.service.AuthService;
 import com.hcsp.wxshop.service.TelVerificationService;
@@ -162,13 +162,12 @@ public class AuthController {
      *     }
      */
     @Reference(version = "${wxshop.orderservice.version}")
-    OrderService orderService;
+    OrderRpcService orderService;
     /**
      * @return 登录状态
      */
     @GetMapping("/status")
     public Object loginStatus() {
-        System.out.println(orderService.sayHello("aaa"));
         if (UserContext.getCurrentUser() == null) {
             return LoginResponse.notLogin();
         } else {

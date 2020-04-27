@@ -1,12 +1,11 @@
 spring:
   application:
-    name: wxshop-order
+    name: wxshop-main
   datasource:
     url: jdbc:mysql://localhost:3306/wxshop?useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: root
     driverClassName: com.mysql.cj.jdbc.Driver
-
 
 mybatis:
   config-location: classpath:db/mybatis/config.xml
@@ -17,7 +16,9 @@ wxshop:
     port: 6379
   orderservice:
     version: 0.0.1
+    url: ""
 
 dubbo:
   registry:
     address: zookeeper://127.0.0.1:2181
+
