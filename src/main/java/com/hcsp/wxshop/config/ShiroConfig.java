@@ -40,9 +40,9 @@ public class ShiroConfig implements WebMvcConfigurer {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-                response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-                response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS");
-                response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//                response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//                response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS");
+//                response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
                 if ("OPTIONS".equals(request.getMethod())) {
                     response.setStatus(200);
