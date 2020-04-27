@@ -48,6 +48,11 @@ public class ShiroConfig implements WebMvcConfigurer {
                 response.setHeader("Access-Control-Allow-Headers", "Content-Type");
                 response.setHeader("Access-Control-Allow-Credentials", "true");
 
+                if ("OPTIONS".equals(request.getMethod())) {
+                    response.setStatus(200);
+                    return false;
+                }
+
                 Object tel = SecurityUtils.getSubject().getPrincipal();
                 if (tel != null) {
                     userService.getUserByTel(tel.toString()).ifPresent(UserContext::setCurrentUser);
