@@ -1,4 +1,4 @@
-package com.hcsp.wxshop.entity;
+package com.hcsp.api.exceptions;
 
 import org.springframework.http.HttpStatus;
 

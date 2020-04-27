@@ -3,11 +3,12 @@ package com.hcsp.wxshop.service;
 import com.hcsp.api.DataStatus;
 import com.hcsp.api.data.GoodsInfo;
 import com.hcsp.api.data.OrderInfo;
+import com.hcsp.api.data.RpcOrderGoods;
 import com.hcsp.api.generate.Order;
 import com.hcsp.api.rpc.OrderRpcService;
 import com.hcsp.wxshop.dao.GoodsStockMapper;
 import com.hcsp.wxshop.entity.GoodsWithNumber;
-import com.hcsp.wxshop.entity.HttpException;
+import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.wxshop.entity.OrderResponse;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.generate.ShopMapper;
@@ -56,18 +57,18 @@ public class OrderService {
     }
 
     public OrderResponse createOrder(OrderInfo orderInfo, Long userId) {
-        Map<Long, Goods> idToGoodsMap = getIdToGoodsMap(orderInfo);
+        Map<Long, Goods> idToGoodsMap = getIdToGoodsMap(orderInfo.getGoods());
         Order createdOrder = createOrderViaRpc(orderInfo, userId, idToGoodsMap);
-        return generateResponse(createdOrder, idToGoodsMap, orderInfo);
+        return generateResponse(createdOrder, idToGoodsMap, orderInfo.getGoods());
     }
 
-    private OrderResponse generateResponse(Order createdOrder, Map<Long, Goods> idToGoodsMap, OrderInfo orderInfo) {
+    private OrderResponse generateResponse(Order createdOrder, Map<Long, Goods> idToGoodsMap, List<GoodsInfo> goodsInfo) {
         OrderResponse response = new OrderResponse(createdOrder);
 
         Long shopId = new ArrayList<>(idToGoodsMap.values()).get(0).getShopId();
         response.setShop(shopMapper.selectByPrimaryKey(shopId));
         response.setGoods(
-                orderInfo.getGoods()
+                goodsInfo
                         .stream()
                         .map(goods -> toGoodsWithNumber(goods, idToGoodsMap))
                         .collect(toList())
@@ -76,8 +77,8 @@ public class OrderService {
         return response;
     }
 
-    private Map<Long, Goods> getIdToGoodsMap(OrderInfo orderInfo) {
-        List<Long> goodsId = orderInfo.getGoods()
+    private Map<Long, Goods> getIdToGoodsMap(List<GoodsInfo> goodsInfo) {
+        List<Long> goodsId = goodsInfo
                 .stream()
                 .map(GoodsInfo::getId)
                 .collect(toList());
@@ -129,5 +130,11 @@ public class OrderService {
         }
 
         return result;
+    }
+
+    public OrderResponse deleteOrder(long orderId, long userId) {
+        RpcOrderGoods rpcOrderGoods = orderRpcService.deleteOrder(orderId, userId);
+        Map<Long, Goods> idToGoodsMap = getIdToGoodsMap(rpcOrderGoods.getGoods());
+        return generateResponse(rpcOrderGoods.getOrder(), idToGoodsMap, rpcOrderGoods.getGoods());
     }
 }

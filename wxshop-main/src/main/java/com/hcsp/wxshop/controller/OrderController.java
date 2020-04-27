@@ -6,6 +6,8 @@ import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.service.OrderService;
 import com.hcsp.wxshop.service.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -316,6 +318,8 @@ public class OrderController {
      *     }
      */
     // @formatter:on
-    public void deleteOrder() {
+    @DeleteMapping("/order/{id}")
+    public Response<OrderResponse> deleteOrder(@PathVariable("id") long orderId) {
+        return Response.of(orderService.deleteOrder(orderId));
     }
 }

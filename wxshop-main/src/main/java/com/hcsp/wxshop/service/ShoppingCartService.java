@@ -4,7 +4,7 @@ import com.hcsp.api.DataStatus;
 import com.hcsp.wxshop.controller.ShoppingCartController;
 import com.hcsp.wxshop.dao.ShoppingCartQueryMapper;
 import com.hcsp.wxshop.entity.GoodsWithNumber;
-import com.hcsp.wxshop.entity.HttpException;
+import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.wxshop.entity.PageResponse;
 import com.hcsp.wxshop.entity.ShoppingCartData;
 import com.hcsp.wxshop.generate.Goods;

@@ -1,18 +1,20 @@
 package com.hcsp.api.data;
 
+import com.hcsp.api.generate.Order;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class OrderInfo implements Serializable {
-    private long orderId;
+public class RpcOrderGoods implements Serializable {
+    private Order order;
     private List<GoodsInfo> goods;
 
-    public long getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public List<GoodsInfo> getGoods() {

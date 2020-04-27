@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.wxshop.entity.HttpException;
+import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.wxshop.entity.Response;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

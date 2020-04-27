@@ -105,4 +105,10 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         // 确保扣库存成功的回滚了
         canCreateOrder();
     }
+
+    @Test
+    public void canDeleteOrder() throws Exception {
+        canCreateOrder();
+
+    }
 }
