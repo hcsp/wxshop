@@ -44,6 +44,11 @@ public class ShiroConfig implements WebMvcConfigurer {
                 response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, POST, DELETE, OPTIONS");
                 response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
+                if ("OPTIONS".equals(request.getMethod())) {
+                    response.setStatus(200);
+                    return false;
+                }
+
                 Object tel = SecurityUtils.getSubject().getPrincipal();
                 if (tel != null) {
                     userService.getUserByTel(tel.toString()).ifPresent(UserContext::setCurrentUser);
