@@ -1,6 +1,5 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.wxshop.entity.HttpException;
 import com.hcsp.wxshop.entity.PageResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.generate.Shop;
@@ -195,12 +194,7 @@ public class ShopController {
                                      @RequestBody Shop shop,
                                      HttpServletResponse response) {
         shop.setId(id);
-        try {
-            return Response.of(shopService.updateShop(shop, UserContext.getCurrentUser().getId()));
-        } catch (HttpException e) {
-            response.setStatus(e.getStatusCode());
-            return Response.of(e.getMessage(), null);
-        }
+        return Response.of(shopService.updateShop(shop, UserContext.getCurrentUser().getId()));
     }
 
     // @formatter:off
@@ -241,18 +235,12 @@ public class ShopController {
     // @formatter:on
 
     /**
-     * 删除店铺
-     * @param shopId
-     * @param response
+     *
+     * @param shopId 店铺id
      * @return 刚刚删除的店铺
      */
     @DeleteMapping("/shop/{id}")
-    public Response<Shop> deleteShop(@PathVariable("id") Long shopId, HttpServletResponse response) {
-        try {
-            return Response.of(shopService.deleteShop(shopId, UserContext.getCurrentUser().getId()));
-        } catch (HttpException e) {
-            response.setStatus(e.getStatusCode());
-            return Response.of(e.getMessage(), null);
-        }
+    public Response<Shop> deleteShop(@PathVariable("id") Long shopId) {
+        return Response.of(shopService.deleteShop(shopId, UserContext.getCurrentUser().getId()));
     }
 }

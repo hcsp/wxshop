@@ -1,6 +1,5 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.wxshop.entity.HttpException;
 import com.hcsp.wxshop.entity.PageResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.generate.Goods;
@@ -156,12 +155,7 @@ public class GoodsController {
      public Response<Goods> createdGoods(@RequestBody Goods goods, HttpServletResponse response) {
          clean(goods);
          response.setStatus(HttpServletResponse.SC_CREATED);
-         try {
-             return Response.of(goodsService.createGoods(goods));
-         } catch (HttpException e) {
-             response.setStatus(e.getStatusCode());
-             return Response.of(e.getMessage(), null);
-         }
+         return Response.of(goodsService.createGoods(goods));
      }
 
     private void clean(Goods goods) {
@@ -228,12 +222,7 @@ public class GoodsController {
      */
     // @formatter:on
     public Response<Goods> updateGoods(Goods goods, HttpServletResponse response) {
-        try {
-            return Response.of(goodsService.updateGoods(goods));
-        } catch (HttpException e) {
-            response.setStatus(e.getStatusCode());
-            return Response.of(e.getMessage(), null);
-        }
+        return Response.of(goodsService.updateGoods(goods));
     }
 
     // @formatter:off
@@ -284,12 +273,7 @@ public class GoodsController {
     // @formatter:on
     @DeleteMapping("/goods/{id}")
     public Response<Goods> deleteGoods(@PathVariable("id") Long goodsId, HttpServletResponse response) {
-        try {
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            return Response.of(goodsService.deleteGoodsById(goodsId));
-        } catch (HttpException e) {
-            response.setStatus(e.getStatusCode());
-            return Response.of(e.getMessage(), null);
-        }
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        return Response.of(goodsService.deleteGoodsById(goodsId));
     }
 }
