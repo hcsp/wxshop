@@ -7,6 +7,7 @@ import com.hcsp.wxshop.service.TelVerificationService;
 import com.hcsp.wxshop.service.UserContext;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,34 +97,36 @@ public class AuthController {
      */
     /**
      * @param telAndCode 手机号
+     * @param response HTTP响应
      */
     @PostMapping("/login")
-    public void login(@RequestBody TelAndCode telAndCode) {
+    public void login(@RequestBody TelAndCode telAndCode, HttpServletResponse response) {
         UsernamePasswordToken token = new UsernamePasswordToken(
                 telAndCode.getTel(),
                 telAndCode.getCode());
         token.setRememberMe(true);
 
-        SecurityUtils.getSubject().login(token);
+        try {
+            SecurityUtils.getSubject().login(token);
+        } catch (IncorrectCredentialsException e) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
 
     /**
      * @api {post} /logout 登出
      * @apiName Logout
      * @apiGroup 登录与鉴权
-     *
      * @apiHeader {String} Accept application/json
      * @apiHeader {String} Content-Type application/json
-     *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
+     * HTTP/1.1 200 OK
      * @apiError 401 Unauthorized 若用户未登录
-     *
      * @apiErrorExample Error-Response:
-     *     HTTP/1.1 400 Bad Request
-     *     {
-     *       "message": "Bad Request"
-     *     }
+     * HTTP/1.1 400 Bad Request
+     * {
+     * "message": "Bad Request"
+     * }
      */
     @PostMapping("/logout")
     public void logout() {
