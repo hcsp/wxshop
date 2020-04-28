@@ -13,7 +13,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.hcsp.wxshop.service.TelVerificationServiceTest.VALID_PARAMETER;
+import static com.hcsp.wxshop.service.TelVerificationServiceTest.WRONG_CODE;
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
+import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 @ExtendWith(SpringExtension.class)
@@ -43,13 +45,22 @@ public class AuthIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    public void returnForbiddenWhenCodeIsNotCorrect() throws Exception {
+        int responseCode = doHttpRequest("/api/v1/login",
+                "POST",
+                WRONG_CODE,
+                null).code;
+
+        Assertions.assertEquals(HTTP_FORBIDDEN, responseCode);
+    }
+
+    @Test
     public void returnHttpOKWhenParameterIsCorrect() throws JsonProcessingException {
         int responseCode = HttpRequest.post(getUrl("/api/v1/code"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .send(objectMapper.writeValueAsString(VALID_PARAMETER))
                 .code();
-
         Assertions.assertEquals(HTTP_OK, responseCode);
     }
 
