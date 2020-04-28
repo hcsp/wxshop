@@ -24,12 +24,16 @@ public class ShopService {
 
     public PageResponse<Shop> getShopByUserId(Long userId, int pageNum, int pageSize) {
         ShopExample countByStatus = new ShopExample();
-        countByStatus.createCriteria().andStatusEqualTo(DataStatus.DELETED.getName());
+        countByStatus.createCriteria()
+                .andStatusEqualTo(DataStatus.OK.getName())
+                .andOwnerUserIdEqualTo(userId);
         int totalNumber = (int) shopMapper.countByExample(countByStatus);
         int totalPage = totalNumber % pageSize == 0 ? totalNumber / pageSize : totalNumber / pageSize + 1;
 
         ShopExample pageCondition = new ShopExample();
-        pageCondition.createCriteria().andStatusEqualTo(DataStatus.OK.getName());
+        pageCondition.createCriteria()
+                .andStatusEqualTo(DataStatus.OK.getName())
+                .andOwnerUserIdEqualTo(userId);
         pageCondition.setLimit(pageSize);
         pageCondition.setOffset((pageNum - 1) * pageSize);
 
