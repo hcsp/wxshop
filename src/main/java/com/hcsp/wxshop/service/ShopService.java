@@ -31,6 +31,7 @@ public class ShopService {
         int totalPage = totalNumber % pageSize == 0 ? totalNumber / pageSize : totalNumber / pageSize + 1;
 
         ShopExample pageCondition = new ShopExample();
+        pageCondition.setOrderByClause("updated_at desc");
         pageCondition.createCriteria()
                 .andStatusEqualTo(DataStatus.OK.getName())
                 .andOwnerUserIdEqualTo(userId);
