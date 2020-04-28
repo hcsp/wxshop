@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import com.hcsp.wxshop.WxshopApplication;
 import com.hcsp.wxshop.controller.ShoppingCartController;
 import com.hcsp.api.DataStatus;
-import com.hcsp.wxshop.entity.PageResponse;
+import com.hcsp.api.data.PageResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.entity.ShoppingCartData;
 import com.hcsp.wxshop.entity.GoodsWithNumber;

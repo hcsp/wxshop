@@ -2,7 +2,7 @@ package com.hcsp.wxshop.service;
 
 import com.hcsp.api.DataStatus;
 import com.hcsp.api.exceptions.HttpException;
-import com.hcsp.wxshop.entity.PageResponse;
+import com.hcsp.api.data.PageResponse;
 import com.hcsp.wxshop.generate.Shop;
 import com.hcsp.wxshop.generate.ShopExample;
 import com.hcsp.wxshop.generate.ShopMapper;

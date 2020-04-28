@@ -1,16 +1,23 @@
 package com.hcsp.wxshop.controller;
 
+import com.hcsp.api.DataStatus;
 import com.hcsp.api.data.OrderInfo;
+import com.hcsp.api.data.PageResponse;
+import com.hcsp.api.exceptions.HttpException;
+import com.hcsp.api.generate.Order;
 import com.hcsp.wxshop.entity.OrderResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.service.OrderService;
 import com.hcsp.wxshop.service.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -96,8 +103,17 @@ public class OrderController {
      *     }
      */
     // @formatter:on
-    public void getOrder() {
+    @GetMapping("/order")
+    public PageResponse<OrderResponse> getOrder(@RequestParam("pageNum") Integer pageNum,
+                                                @RequestParam("pageSize") Integer pageSize,
+                                                @RequestParam(value = "status", required = false) String status) {
+        if (status != null && DataStatus.fromStatus(status) == null) {
+            throw HttpException.badRequest("非法status: " + status);
+        }
+
+        return orderService.getOrder(pageNum, pageSize, DataStatus.fromStatus(status));
     }
+
 
     // @formatter:off
     /**
@@ -255,7 +271,13 @@ public class OrderController {
      *     }
      */
     // @formatter:on
-    public void updateOrder() {
+    @PatchMapping("/order")
+    public Response<OrderResponse> updateOrder(@RequestBody Order order) {
+        if (order.getExpressCompany() != null) {
+            return orderService.updateExpressInformation(order, UserContext.getCurrentUser().getId());
+        } else {
+            return orderService.updateOrderStatus(order, UserContext.getCurrentUser().getId());
+        }
     }
 
     // @formatter:off

@@ -1,6 +1,6 @@
 package com.hcsp.wxshop.controller;
 
-import com.hcsp.wxshop.entity.PageResponse;
+import com.hcsp.api.data.PageResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.service.GoodsService;

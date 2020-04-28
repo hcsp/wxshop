@@ -15,4 +15,23 @@
         FROM ORDER_GOODS
         WHERE ORDER_ID = #{id}
     </select>
+    <update id="updateById" parameterType="Order">
+        UPDATE `ORDER`
+        SET
+            UPDATED_AT = now()
+        <if test="expressCompany != null">
+            ,
+            EXPRESS_COMPANY = #{expressCompany}
+        </if>
+        <if test="expressCompany != null">
+            ,
+            EXPRESS_ID = #{expressId}
+        </if>
+        <if test="status != null">
+            ,
+            STATUS = #{status}
+        </if>
+        WHERE
+            ID = #{id}
+    </update>
 </mapper>

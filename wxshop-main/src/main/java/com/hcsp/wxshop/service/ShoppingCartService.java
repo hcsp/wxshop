@@ -5,7 +5,7 @@ import com.hcsp.wxshop.controller.ShoppingCartController;
 import com.hcsp.wxshop.dao.ShoppingCartQueryMapper;
 import com.hcsp.wxshop.entity.GoodsWithNumber;
 import com.hcsp.api.exceptions.HttpException;
-import com.hcsp.wxshop.entity.PageResponse;
+import com.hcsp.api.data.PageResponse;
 import com.hcsp.wxshop.entity.ShoppingCartData;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.generate.GoodsMapper;

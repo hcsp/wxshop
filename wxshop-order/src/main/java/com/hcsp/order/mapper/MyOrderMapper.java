@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface MyOrderMapper {
-    void insertOrders( OrderInfo orderInfo);
+    void insertOrders(OrderInfo orderInfo);
 
     List<GoodsInfo> getGoodsInfoOfOrder(long orderId);
 }
