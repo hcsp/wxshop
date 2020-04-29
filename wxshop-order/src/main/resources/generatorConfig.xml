@@ -31,7 +31,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table schema="order" tableName="ORDER" domainObjectName="Order" >
+        <table schema="order" tableName="ORDER_TABLE" domainObjectName="Order" >
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="ID" sqlStatement="MySql" identity="true" />
         </table>

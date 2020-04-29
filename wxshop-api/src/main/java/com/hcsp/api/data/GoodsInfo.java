@@ -6,6 +6,15 @@ public class GoodsInfo implements Serializable {
     private long id;
     private int number;
 
+    public GoodsInfo() {
+
+    }
+
+    public GoodsInfo(long id, int number) {
+        this.id = id;
+        this.number = number;
+    }
+
     public long getId() {
         return id;
     }

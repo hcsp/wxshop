@@ -8,6 +8,8 @@
     </settings>
     <typeAliases>
         <typeAlias type="com.hcsp.api.data.OrderInfo" alias="OrderInfo"/>
+        <typeAlias type="com.hcsp.api.data.GoodsInfo" alias="GoodsInfo"/>
+        <typeAlias type="com.hcsp.api.generate.Order" alias="Order"/>
     </typeAliases>
     <mappers>
         <mapper resource="db/mybatis/MyOrderMapper.xml"/>

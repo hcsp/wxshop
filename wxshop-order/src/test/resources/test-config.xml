@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <typeAlias type="com.hcsp.api.data.OrderInfo" alias="OrderInfo"/>
+        <typeAlias type="com.hcsp.api.data.GoodsInfo" alias="GoodsInfo"/>
+        <typeAlias type="com.hcsp.api.generate.Order" alias="Order"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3307/order?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="db/mybatis/MyOrderMapper.xml"/>
+        <mapper resource="db/mybatis/OrderGoodsMapper.xml"/>
+        <mapper resource="db/mybatis/OrderMapper.xml"/>
+    </mappers>
+</configuration>
