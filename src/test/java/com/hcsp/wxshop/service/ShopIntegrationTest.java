@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.hcsp.wxshop.WxshopApplication;
 import com.hcsp.wxshop.entity.PageResponse;
+import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.generate.Shop;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +23,6 @@ public class ShopIntegrationTest extends AbstractIntegrationTest {
     public void testGetShop() throws JsonProcessingException {
         UserLoginResponse loginResponse = loginAndGetCookie();
 
-
         PageResponse<Shop> shopResponse = doHttpRequest(
                 "/api/v1/shop?pageNum=2&pageSize=1",
                 "GET",
@@ -36,5 +36,21 @@ public class ShopIntegrationTest extends AbstractIntegrationTest {
         assertEquals(2, shopResponse.getPageNum());
         assertEquals(2L, shopResponse.getData().get(0).getId());
         assertEquals("shop2", shopResponse.getData().get(0).getName());
+    }
+
+    @Test
+    public void testGetShopById() throws Exception {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+        Response<Shop> shopResponse = doHttpRequest(
+                "/api/v1/shop/2",
+                "GET",
+                null,
+                loginResponse.cookie)
+                .asJsonObject(new TypeReference<Response<Shop>>() {
+                });
+
+        assertEquals(2L, shopResponse.getData().getId());
+        assertEquals("shop2", shopResponse.getData().getName());
+        assertEquals("desc2", shopResponse.getData().getDescription());
     }
 }

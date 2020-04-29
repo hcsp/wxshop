@@ -79,4 +79,21 @@ public class GoodsIntegrationTest extends AbstractIntegrationTest {
                 cookie);
         assertEquals(SC_NOT_FOUND, response.code);
     }
+
+    @Test
+    public void testGetGoodsById() throws JsonProcessingException {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+        Response<Goods> goodsResponse = doHttpRequest(
+                "/api/v1/goods/2",
+                "GET",
+                null,
+                loginResponse.cookie)
+                .asJsonObject(new TypeReference<Response<Goods>>() {
+                });
+
+        assertEquals(2L, goodsResponse.getData().getId());
+        assertEquals("goods2", goodsResponse.getData().getName());
+        assertEquals("desc2", goodsResponse.getData().getDescription());
+        assertEquals("details2", goodsResponse.getData().getDetails());
+    }
 }

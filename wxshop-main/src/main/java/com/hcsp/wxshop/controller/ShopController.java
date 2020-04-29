@@ -88,6 +88,48 @@ public class ShopController {
 
     // @formatter:off
     /**
+     * @api {get} /shop/:id 获取指定ID的店铺
+     * @apiName GetShopById
+     * @apiGroup 店铺
+     *
+     * @apiHeader {String} Accept application/json
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 Created
+     *     {
+     *       "data": {
+     *              "id": 12345,
+     *              "name": "我的店铺",
+     *              "description": "我的苹果专卖店",
+     *              "imgUrl": "https://img.url",
+     *              "ownerUserId": 12345,
+     *              "createdAt": "2020-03-22T13:22:03Z",
+     *              "updatedAt": "2020-03-22T13:22:03Z"
+     *       }
+     *     }
+     *
+     * @apiError 401 Unauthorized 若用户未登录
+     * @apiError 404 Not found 若店铺未找到
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 401 Unauthorized
+     *     {
+     *       "message": "Unauthorized"
+     *     }
+     */
+    /**
+     * 根据id获取店铺
+     * @param shopId 店铺id
+     * @return 店铺
+     */
+    // @formatter:on
+    @GetMapping("/shop/{id}")
+    public Response<Shop> getShop(@PathVariable("id") long shopId) {
+        return Response.of(shopService.getShopById(shopId));
+    }
+
+    // @formatter:off
+    /**
      * @api {post} /shop 创建店铺
      * @apiName CreateShop
      * @apiGroup 店铺
