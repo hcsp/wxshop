@@ -84,4 +84,16 @@ public class ShopService {
         shopMapper.updateByPrimaryKey(shopInDatabase);
         return shopInDatabase;
     }
+
+    public Shop getShopById(long shopId) {
+        ShopExample okStatus = new ShopExample();
+        okStatus.createCriteria()
+                .andIdEqualTo(shopId)
+                .andStatusEqualTo(DataStatus.OK.name());
+        List<Shop> shops = shopMapper.selectByExample(okStatus);
+        if (shops.isEmpty()) {
+            throw HttpException.notFound("店铺未找到：" + shopId);
+        }
+        return shops.get(0);
+    }
 }

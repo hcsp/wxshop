@@ -97,6 +97,55 @@ public class GoodsController {
 
     // @formatter:off
     /**
+     * @api {get} /goods/:id 获取指定id的商品
+     * @apiName GetGoodsById
+     * @apiGroup 商品
+     *
+     * @apiHeader {String} Accept application/json
+     *
+     * @apiSuccess {Goods} data 指定id的商品
+     *
+     * @apiSuccessExample Success-Response:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "data": {
+     *              "id": 12345,
+     *              "name": "肥皂",
+     *              "description": "纯天然无污染肥皂",
+     *              "details": "这是一块好肥皂",
+     *              "imgUrl": "https://img.url",
+     *              "price": 500,
+     *              "stock": 10,
+     *              "shopId": 12345,
+     *              "createdAt": "2020-03-22T13:22:03Z",
+     *              "updatedAt": "2020-03-22T13:22:03Z"
+     *       }
+     *     }
+     *
+     * @apiError 400 Bad Request 若用户的请求中包含错误
+     * @apiError 404 Not Found 商品未找到
+     *
+     * @apiErrorExample Error-Response:
+     *     HTTP/1.1 401 Unauthorized
+     *     {
+     *       "message": "Unauthorized"
+     *     }
+     */
+    // @formatter:on
+
+    /**
+     * 根据id获取商品
+     * @param shopId id
+     * @return 指定id的商品
+     */
+    @GetMapping("/goods/{id}")
+    public @ResponseBody
+    Response<Goods> getGoodsById(@PathVariable("id") long shopId) {
+        return Response.of(goodsService.getGoodsById(shopId));
+    }
+
+    // @formatter:off
+    /**
      * @api {post} /goods 创建商品
      * @apiName CreateGoods
      * @apiGroup 商品
