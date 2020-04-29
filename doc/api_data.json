@@ -293,6 +293,74 @@
     "groupTitle": "商品"
   },
   {
+    "type": "get",
+    "url": "/goods/:id",
+    "title": "获取指定id的商品",
+    "name": "GetGoodsById",
+    "group": "商品",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Accept",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Goods",
+            "optional": false,
+            "field": "data",
+            "description": "<p>指定id的商品</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"data\": {\n         \"id\": 12345,\n         \"name\": \"肥皂\",\n         \"description\": \"纯天然无污染肥皂\",\n         \"details\": \"这是一块好肥皂\",\n         \"imgUrl\": \"https://img.url\",\n         \"price\": 500,\n         \"stock\": 10,\n         \"shopId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "400",
+            "description": "<p>Bad Request 若用户的请求中包含错误</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>Not Found 商品未找到</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n  \"message\": \"Unauthorized\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
+    "groupTitle": "商品"
+  },
+  {
     "type": "patch",
     "url": "/goods/:id",
     "title": "更新商品",
@@ -658,6 +726,63 @@
     "groupTitle": "店铺"
   },
   {
+    "type": "get",
+    "url": "/shop/:id",
+    "title": "获取指定ID的店铺",
+    "name": "GetShopById",
+    "group": "店铺",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Accept",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Created\n{\n  \"data\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "401",
+            "description": "<p>Unauthorized 若用户未登录</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>Not found 若店铺未找到</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n  \"message\": \"Unauthorized\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "src/main/java/com/hcsp/wxshop/controller/ShopController.java",
+    "groupTitle": "店铺"
+  },
+  {
     "type": "PATCH",
     "url": "/shop/:id",
     "title": "修改店铺",
@@ -971,7 +1096,7 @@
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"Bad Request\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n\"message\": \"Bad Request\"\n}",
           "type": "json"
         }
       ]
@@ -1686,7 +1811,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"pageNum\": 1,\n  \"pageSize\": 10,\n  \"totalPage\": 5,\n  \"data\": [\n    {\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"pageNum\": 1,\n  \"pageSize\": 10,\n  \"totalPage\": 5,\n  \"data\": [\n    {\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n  ]\n}",
           "type": "json"
         }
       ]
