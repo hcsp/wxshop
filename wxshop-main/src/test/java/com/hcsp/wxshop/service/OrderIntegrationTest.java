@@ -12,6 +12,7 @@ import com.hcsp.wxshop.entity.GoodsWithNumber;
 import com.hcsp.wxshop.entity.OrderResponse;
 import com.hcsp.wxshop.entity.Response;
 import com.hcsp.wxshop.generate.Goods;
+import com.hcsp.wxshop.generate.Shop;
 import com.hcsp.wxshop.mock.MockOrderRpcService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +27,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.net.HttpURLConnection;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
@@ -112,24 +117,126 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
     public void canDeleteOrder() throws Exception {
         UserLoginResponse loginResponse = loginAndGetCookie();
 
-        when(mockOrderRpcService.orderRpcService.getOrder(any(), any(), any(), any()))
-                .thenReturn();
+        when(mockOrderRpcService.orderRpcService.getOrder(anyLong(), anyInt(), anyInt(), any()))
+                .thenReturn(mockResponse());
 
         // 获取当前订单
-        PageResponse<OrderResponse> orders = doHttpRequest("/api/v1/order?pageSize=2&pageNum=1", "GET", null, loginResponse.cookie)
+        PageResponse<OrderResponse> orders = doHttpRequest("/api/v1/order?pageSize=2&pageNum=3", "GET", null, loginResponse.cookie)
                 .asJsonObject(new TypeReference<PageResponse<OrderResponse>>() {
                 });
 
+        Assertions.assertEquals(3, orders.getPageNum());
+        Assertions.assertEquals(10, orders.getTotalPage());
+        Assertions.assertEquals(2, orders.getPageSize());
+        Assertions.assertEquals(Arrays.asList("shop2", "shop2"),
+                orders.getData().stream().map(OrderResponse::getShop).map(Shop::getName).collect(toList()));
+        Assertions.assertEquals(Arrays.asList("goods3", "goods4"),
+                orders.getData().stream()
+                        .map(OrderResponse::getGoods)
+                        .flatMap(List::stream)
+                        .map(Goods::getName)
+                        .collect(toList()));
+
+        Assertions.assertEquals(Arrays.asList(5, 3),
+                orders.getData().stream()
+                        .map(OrderResponse::getGoods)
+                        .flatMap(List::stream)
+                        .map(GoodsWithNumber::getNumber)
+                        .collect(toList()));
+
+        when(mockOrderRpcService.orderRpcService.deleteOrder(100L, 1L))
+                .thenReturn(mockRpcOderGoods(100, 1, 3, 2, 5, DataStatus.DELETED));
+
         // 删除某个订单
-        canCreateOrder();
-        // 再次获取订单
+        Response<OrderResponse> deletedOrder = doHttpRequest("/api/v1/order/100", "DELETE", null, loginResponse.cookie)
+                .assertOkStatusCode()
+                .asJsonObject(new TypeReference<Response<OrderResponse>>() {
+                });
+
+        Assertions.assertEquals(DataStatus.DELETED.getName(), deletedOrder.getData().getStatus());
+        Assertions.assertEquals(100L, deletedOrder.getData().getId());
+        Assertions.assertEquals(1, deletedOrder.getData().getGoods().size());
+        Assertions.assertEquals(3L, deletedOrder.getData().getGoods().get(0).getId());
+        Assertions.assertEquals(5, deletedOrder.getData().getGoods().get(0).getNumber());
+    }
+
+    @Test
+    public void return404IfOrderNotFound() throws Exception {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+
+        Order order = new Order();
+        order.setId(12345L);
+        Assertions.assertEquals(HttpURLConnection.HTTP_NOT_FOUND,
+                doHttpRequest("/api/v1/order/1234567", "PATCH", order, loginResponse.cookie).code);
+    }
+
+    @Test
+    public void canUpdateOrderExpressInfomation() throws Exception {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+
+        Order orderUpdateRequest = new Order();
+        orderUpdateRequest.setId(12345L);
+        orderUpdateRequest.setShopId(2L);
+        orderUpdateRequest.setExpressCompany("顺丰");
+        orderUpdateRequest.setExpressId("SF12345678");
+
+        Order orderInDB = new Order();
+        orderInDB.setId(12345L);
+        orderInDB.setShopId(2L);
+
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(orderInDB);
+        when(mockOrderRpcService.orderRpcService.updateOrder(any())).thenReturn(
+                mockRpcOderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.DELIVERED)
+        );
+
+        Response<OrderResponse> response = doHttpRequest("/api/v1/order/12345", "PATCH", orderUpdateRequest, loginResponse.cookie)
+                .assertOkStatusCode()
+                .asJsonObject(new TypeReference<Response<OrderResponse>>() {
+                });
+
+        Assertions.assertEquals(2L, response.getData().getShop().getId());
+        Assertions.assertEquals("shop2", response.getData().getShop().getName());
+        Assertions.assertEquals(DataStatus.DELIVERED.getName(), response.getData().getStatus());
+        Assertions.assertEquals(1, response.getData().getGoods().size());
+        Assertions.assertEquals(3, response.getData().getGoods().get(0).getId());
+        Assertions.assertEquals(10, response.getData().getGoods().get(0).getNumber());
+    }
+
+    @Test
+    public void canUpdateOrderStatus() throws Exception {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+
+        Order orderUpdateRequest = new Order();
+        orderUpdateRequest.setId(12345L);
+        orderUpdateRequest.setStatus(DataStatus.RECEIVED.getName());
+
+        Order orderInDB = new Order();
+        orderInDB.setId(12345L);
+        orderInDB.setUserId(1L);
+
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(orderInDB);
+        when(mockOrderRpcService.orderRpcService.updateOrder(any())).thenReturn(
+                mockRpcOderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.RECEIVED)
+        );
+
+        Response<OrderResponse> response = doHttpRequest("/api/v1/order/12345", "PATCH", orderUpdateRequest, loginResponse.cookie)
+                .assertOkStatusCode()
+                .asJsonObject(new TypeReference<Response<OrderResponse>>() {
+                });
+
+        Assertions.assertEquals(2L, response.getData().getShop().getId());
+        Assertions.assertEquals("shop2", response.getData().getShop().getName());
+        Assertions.assertEquals(DataStatus.RECEIVED.getName(), response.getData().getStatus());
+        Assertions.assertEquals(1, response.getData().getGoods().size());
+        Assertions.assertEquals(3, response.getData().getGoods().get(0).getId());
+        Assertions.assertEquals(10, response.getData().getGoods().get(0).getNumber());
     }
 
     private PageResponse<RpcOrderGoods> mockResponse() {
-        RpcOrderGoods orderGoods1 = new RpcOrderGoods();
-        RpcOrderGoods orderGoods2 = new RpcOrderGoods();
+        RpcOrderGoods order1 = mockRpcOderGoods(100, 1, 3, 2, 5, DataStatus.DELIVERED);
+        RpcOrderGoods order2 = mockRpcOderGoods(101, 1, 4, 2, 3, DataStatus.RECEIVED);
 
-        Order order1 = new Order();
+        return PageResponse.pagedData(3, 2, 10, Arrays.asList(order1, order2));
     }
 
     private RpcOrderGoods mockRpcOderGoods(long orderId,

@@ -178,7 +178,7 @@ public class OrderService {
 
         Shop shop = shopMapper.selectByPrimaryKey(orderInDatabase.getShopId());
         if (shop == null) {
-            throw HttpException.notFound("店铺未找到: " + orderInDatabase.getShopId())
+            throw HttpException.notFound("店铺未找到: " + orderInDatabase.getShopId());
         }
 
         if (shop.getOwnerUserId() != userId) {

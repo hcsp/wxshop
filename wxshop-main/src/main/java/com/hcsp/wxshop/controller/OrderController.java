@@ -12,11 +12,11 @@ import com.hcsp.wxshop.service.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -103,6 +103,14 @@ public class OrderController {
      *     }
      */
     // @formatter:on
+
+    /**
+     * 获取订单
+     * @param pageNum
+     * @param pageSize
+     * @param status
+     * @return 分页的订单
+     */
     @GetMapping("/order")
     public PageResponse<OrderResponse> getOrder(@RequestParam("pageNum") Integer pageNum,
                                                 @RequestParam("pageSize") Integer pageSize,
@@ -111,7 +119,7 @@ public class OrderController {
             throw HttpException.badRequest("非法status: " + status);
         }
 
-        return orderService.getOrder(pageNum, pageSize, DataStatus.fromStatus(status));
+        return orderService.getOrder(UserContext.getCurrentUser().getId(), pageNum, pageSize, DataStatus.fromStatus(status));
     }
 
 
@@ -271,12 +279,19 @@ public class OrderController {
      *     }
      */
     // @formatter:on
-    @PatchMapping("/order")
-    public Response<OrderResponse> updateOrder(@RequestBody Order order) {
+
+    /**
+     * 更新订单
+     * @param id
+     * @param order
+     * @return 更新后的订单
+     */
+    @RequestMapping(value = "/order/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
+    public Response<OrderResponse> updateOrder(@PathVariable("id") Integer id, @RequestBody Order order) {
         if (order.getExpressCompany() != null) {
-            return orderService.updateExpressInformation(order, UserContext.getCurrentUser().getId());
+            return Response.of(orderService.updateExpressInformation(order, UserContext.getCurrentUser().getId()));
         } else {
-            return orderService.updateOrderStatus(order, UserContext.getCurrentUser().getId());
+            return Response.of(orderService.updateOrderStatus(order, UserContext.getCurrentUser().getId()));
         }
     }
 
@@ -340,8 +355,14 @@ public class OrderController {
      *     }
      */
     // @formatter:on
+
+    /**
+     * 删除订单
+     * @param orderId
+     * @return 删除后的订单
+     */
     @DeleteMapping("/order/{id}")
     public Response<OrderResponse> deleteOrder(@PathVariable("id") long orderId) {
-        return Response.of(orderService.deleteOrder(orderId));
+        return Response.of(orderService.deleteOrder(orderId, UserContext.getCurrentUser().getId()));
     }
 }
