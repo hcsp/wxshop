@@ -20,7 +20,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = WxshopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -40,13 +42,13 @@ public class ShoppingCartIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals(2, response.getData().get(0).getShop().getId());
         Assertions.assertEquals(Arrays.asList(4L, 5L),
                 response.getData().get(0).getGoods().stream()
-                        .map(Goods::getId).collect(Collectors.toList()));
+                        .map(Goods::getId).collect(toList()));
         Assertions.assertEquals(Arrays.asList(100L, 200L),
                 response.getData().get(0).getGoods().stream()
-                        .map(ShoppingCartGoods::getPrice).collect(Collectors.toList()));
+                        .map(ShoppingCartGoods::getPrice).collect(toList()));
         Assertions.assertEquals(Arrays.asList(200, 300),
                 response.getData().get(0).getGoods().stream()
-                        .map(ShoppingCartGoods::getNumber).collect(Collectors.toList()));
+                        .map(ShoppingCartGoods::getNumber).collect(toList()));
     }
 
     @Test
@@ -66,12 +68,45 @@ public class ShoppingCartIntegrationTest extends AbstractIntegrationTest {
 
         Assertions.assertEquals(1L, response.getData().getShop().getId());
         Assertions.assertEquals(Arrays.asList(1L, 2L),
-                response.getData().getGoods().stream().map(Goods::getId).collect(Collectors.toList()));
+                response.getData().getGoods().stream().map(Goods::getId).collect(toList()));
         Assertions.assertEquals(Sets.newHashSet(2, 100),
-                response.getData().getGoods().stream().map(ShoppingCartGoods::getNumber).collect(Collectors.toSet()));
+                response.getData().getGoods().stream().map(ShoppingCartGoods::getNumber).collect(toSet()));
         Assertions.assertTrue(response.getData().getGoods().stream().allMatch(
                 goods -> goods.getShopId() == 1L
         ));
+    }
+
+    // 重复将同一个商品加入购物车，后面的商品会覆盖前面的
+    @Test
+    public void addingSameGoodsToShoppingCartOverwritesOldGoods() throws Exception {
+        // 第一次添加id为2的商品，2个
+        canAddShoppingCartData();
+
+        UserLoginResponse loginResponse = loginAndGetCookie();
+
+        // 第二次添加id为2的商品，1个
+        ShoppingCartController.AddToShoppingCartRequest request = new ShoppingCartController.AddToShoppingCartRequest();
+        ShoppingCartController.AddToShoppingCartItem item = new ShoppingCartController.AddToShoppingCartItem();
+        item.setId(2L);
+        item.setNumber(1);
+
+        request.setGoods(Collections.singletonList(item));
+
+        Response<ShoppingCartData> addShoppingCartResponse = doHttpRequest("/api/v1/shoppingCart",
+                "POST", request, loginResponse.cookie).asJsonObject(new TypeReference<Response<ShoppingCartData>>() {
+        });
+
+        PageResponse<ShoppingCartData> getShoppingCartResponse = doHttpRequest("/api/v1/shoppingCart?pageNum=1&pageSize=100",
+                "GET", null, loginResponse.cookie).asJsonObject(new TypeReference<PageResponse<ShoppingCartData>>() {
+        });
+
+        ShoppingCartData shop1Data = getShoppingCartResponse.getData().stream().filter(data -> data.getShop().getId() == 1)
+                .findFirst().get();
+
+        Assertions.assertEquals(Arrays.asList(1L, 2L),
+                shop1Data.getGoods().stream().map(Goods::getId).collect(toList()));
+        Assertions.assertEquals(Sets.newHashSet(1, 100),
+                shop1Data.getGoods().stream().map(ShoppingCartGoods::getNumber).collect(toSet()));
     }
 
     @Test

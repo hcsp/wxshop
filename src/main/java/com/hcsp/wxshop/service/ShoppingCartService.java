@@ -11,6 +11,7 @@ import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.generate.GoodsExample;
 import com.hcsp.wxshop.generate.GoodsMapper;
 import com.hcsp.wxshop.generate.ShoppingCart;
+import com.hcsp.wxshop.generate.ShoppingCartExample;
 import com.hcsp.wxshop.generate.ShoppingCartMapper;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.ibatis.session.ExecutorType;
@@ -104,11 +105,19 @@ public class ShoppingCartService {
 
         try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
             ShoppingCartMapper mapper = sqlSession.getMapper(ShoppingCartMapper.class);
-            shoppingCartRows.forEach(mapper::insert);
+            shoppingCartRows.forEach(row -> insertGoodsToShoppingCart(userId, row, mapper));
             sqlSession.commit();
         }
 
         return getLatestShoppingCartDataByUserIdShopId(goods.get(0).getShopId(), userId);
+    }
+
+    private void insertGoodsToShoppingCart(long userId, ShoppingCart shoppingCartRow, ShoppingCartMapper shoppingCartMapper) {
+        // 首先删除购物车中已有的相应商品
+        ShoppingCartExample example = new ShoppingCartExample();
+        example.createCriteria().andGoodsIdEqualTo(shoppingCartRow.getGoodsId()).andUserIdEqualTo(userId);
+        shoppingCartMapper.deleteByExample(example);
+        shoppingCartMapper.insert(shoppingCartRow);
     }
 
     private ShoppingCartData getLatestShoppingCartDataByUserIdShopId(long shopId, long userId) {
