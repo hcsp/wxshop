@@ -30,7 +30,7 @@
                  FROM SHOPPING_CART
                  WHERE USER_ID = #{userId}
                    AND STATUS = 'ok'
-                 LIMIT #{limit},#{offset}
+                 LIMIT #{offset},#{limit}
              ) t1
                  JOIN SHOPPING_CART on t1.SHOP_ID = SHOPPING_CART.SHOP_ID
                  JOIN GOODS on SHOPPING_CART.GOODS_ID = GOODS.ID
