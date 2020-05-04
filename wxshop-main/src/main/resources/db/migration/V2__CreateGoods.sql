@@ -6,12 +6,14 @@ CREATE TABLE GOODS
     DESCRIPTION VARCHAR(1024),
     DETAILS     TEXT,
     IMG_URL     VARCHAR(1024),
-    PRICE       BIGINT, -- 单位 分
+    PRICE       BIGINT,      -- 单位 分
     STOCK       INT       NOT NULL DEFAULT 0,
     STATUS      VARCHAR(16), -- 'ok' 正常 'deleted' 已经删除
     CREATED_AT  TIMESTAMP NOT NULL DEFAULT NOW(),
     UPDATED_AT  TIMESTAMP NOT NULL DEFAULT NOW()
-);
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
 
 INSERT INTO GOODS(ID, SHOP_ID, NAME, DESCRIPTION, DETAILS, IMG_URL, PRICE, STOCK, STATUS)
 VALUES (1, 1, 'goods1', 'desc1', 'details1', 'url1', 100, 5, 'ok');
