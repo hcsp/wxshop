@@ -2,7 +2,7 @@ spring:
   application:
     name: wxshop-order
   datasource:
-    url: jdbc:mysql://localhost:3306/order?useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/order?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf-8
     username: root
     password: root
     driverClassName: com.mysql.cj.jdbc.Driver

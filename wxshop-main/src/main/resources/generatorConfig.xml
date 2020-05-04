@@ -9,7 +9,7 @@
         <plugin type="com.qiukeke.mybatis.plugins.MySQLLimitPlugin" />
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/wxshop?useSSL=false&amp;allowPublicKeyRetrieval=true"
+                        connectionURL="jdbc:mysql://localhost:3306/wxshop?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;characterEncoding=utf-8"
                         userId="root"
                         password="root">
         </jdbcConnection>

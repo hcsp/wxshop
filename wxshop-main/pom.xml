@@ -132,7 +132,7 @@
                 <configuration>
                     <user>root</user>
                     <password>root</password>
-                    <url>jdbc:mysql://localhost:3306/wxshop?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
+                    <url>jdbc:mysql://localhost:3306/wxshop?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;characterEncoding=utf-8</url>
                 </configuration>
             </plugin>
             <plugin>
