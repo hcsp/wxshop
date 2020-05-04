@@ -107,7 +107,7 @@ public class ShoppingCartIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals(Arrays.asList(1L, 2L),
                 shop1Data.getGoods().stream().map(Goods::getId).collect(toList()));
         Assertions.assertEquals(Sets.newHashSet(1, 100),
-                shop1Data.getGoods().stream().map(ShoppingCartGoods::getNumber).collect(toSet()));
+                shop1Data.getGoods().stream().map(GoodsWithNumber::getNumber).collect(toSet()));
     }
 
     @Test
