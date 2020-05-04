@@ -1,8 +1,8 @@
 package com.hcsp.wxshop.service;
 
 import com.hcsp.api.DataStatus;
-import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.api.data.PageResponse;
+import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.generate.GoodsExample;
 import com.hcsp.wxshop.generate.GoodsMapper;
@@ -79,7 +79,7 @@ public class GoodsService {
         }
     }
 
-    public PageResponse<Goods> getGoods(Integer pageNum, Integer pageSize, Integer shopId) {
+    public PageResponse<Goods> getGoods(Integer pageNum, Integer pageSize, Long shopId) {
         // 知道有多少个元素
         // 然后才知道有多少页
         // 然后正确地进行分页
@@ -90,13 +90,16 @@ public class GoodsService {
         GoodsExample page = new GoodsExample();
         page.setLimit(pageSize);
         page.setOffset((pageNum - 1) * pageSize);
+        if (shopId != null) {
+            page.createCriteria().andShopIdEqualTo(shopId);
+        }
 
         List<Goods> pagedGoods = goodsMapper.selectByExample(page);
 
         return PageResponse.pagedData(pageNum, pageSize, totalPage, pagedGoods);
     }
 
-    private int countGoods(Integer shopId) {
+    private int countGoods(Long shopId) {
         if (shopId == null) {
             GoodsExample goodsExample = new GoodsExample();
             goodsExample.createCriteria().andStatusEqualTo(DataStatus.OK.getName());
