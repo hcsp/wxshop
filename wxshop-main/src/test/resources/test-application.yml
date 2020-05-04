@@ -11,7 +11,7 @@ mybatis:
 
 wxshop:
   redis:
-    host: 127.0.0.1
+    host: localhost
     port: 6380
   orderservice:
     version: 0.0.1
