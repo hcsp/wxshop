@@ -80,6 +80,7 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals(1234L, response.getData().getId());
 
         Assertions.assertEquals(2L, response.getData().getShop().getId());
+        Assertions.assertEquals(2L, response.getData().getShopId());
         Assertions.assertEquals("shop2", response.getData().getShop().getName());
         Assertions.assertEquals(DataStatus.PENDING.getName(), response.getData().getStatus());
         Assertions.assertEquals("火星", response.getData().getAddress());
