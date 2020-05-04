@@ -7,6 +7,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @SuppressWarnings("ALL")
 @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
 @Service
@@ -25,6 +27,7 @@ public class UserDao {
     public User getUserByTel(String tel) {
         UserExample example = new UserExample();
         example.createCriteria().andTelEqualTo(tel);
-        return userMapper.selectByExample(example).get(0);
+        List<User> users = userMapper.selectByExample(example);
+        return users.isEmpty() ? null : users.get(0);
     }
 }
