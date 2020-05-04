@@ -5,7 +5,6 @@ import com.hcsp.wxshop.service.UserContext;
 import com.hcsp.wxshop.service.UserService;
 import com.hcsp.wxshop.service.VerificationCodeCheckService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -104,9 +103,6 @@ public class ShiroConfig implements WebMvcConfigurer {
         return securityManager;
     }
 
-    /**
-     * Remember me manager
-     */
     public CookieRememberMeManager rememberMeManager() {
         SimpleCookie cookie = new SimpleCookie(COOKIE_NAME);
         cookie.setMaxAge(EXPIRY_TIME);
