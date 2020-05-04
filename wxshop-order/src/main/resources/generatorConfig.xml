@@ -27,7 +27,7 @@
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hcsp.api.generate"  targetProject="wxshop-order/src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hcsp.order.generate"  targetProject="wxshop-order/src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

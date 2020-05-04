@@ -23,6 +23,7 @@ public class OrderResponse extends Order {
         this.setStatus(order.getStatus());
         this.setCreatedAt(order.getCreatedAt());
         this.setUpdatedAt(order.getUpdatedAt());
+        this.setShopId(order.getShopId());
     }
 
     public Shop getShop() {
