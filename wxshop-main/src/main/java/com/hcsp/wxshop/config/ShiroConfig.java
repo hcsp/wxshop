@@ -1,6 +1,5 @@
 package com.hcsp.wxshop.config;
 
-import com.hcsp.wxshop.generate.User;
 import com.hcsp.wxshop.service.ShiroRealm;
 import com.hcsp.wxshop.service.UserContext;
 import com.hcsp.wxshop.service.UserService;
@@ -29,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.util.Arrays;
-import java.util.Optional;
 
 @Configuration
 @EnableTransactionManagement
@@ -49,6 +47,17 @@ public class ShiroConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
+
+            private boolean isWhitelist(HttpServletRequest request) {
+                return Arrays.asList(
+                        "/api/v1/code",
+                        "/api/v1/login",
+                        "/api/v1/status",
+                        "/api/v1/logout",
+                        "/error"
+                ).contains(request.getRequestURI());
+            }
+
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
                 if ("OPTIONS".equals(request.getMethod())) {
@@ -58,25 +67,16 @@ public class ShiroConfig implements WebMvcConfigurer {
 
                 Object tel = SecurityUtils.getSubject().getPrincipal();
                 if (tel != null) {
-                    Optional<User> user = userService.getUserByTel(tel.toString());
-                    if (user.isPresent()) {
-                        UserContext.setCurrentUser(user.get());
-                        return true;
-                    } else {
-                        response.setStatus(401);
-                        return false;
-                    }
-                } else if (Arrays.asList(
-                        "/api/v1/code",
-                        "/api/v1/login",
-                        "/api/v1/status",
-                        "/api/v1/logout",
-                        "/error"
-                ).contains(request.getRequestURI())) {
+                    userService.getUserByTel(tel.toString()).ifPresent(UserContext::setCurrentUser);
+                }
+
+                if (isWhitelist(request)) {
                     return true;
-                } else {
+                } else if (UserContext.getCurrentUser() == null) {
                     response.setStatus(401);
                     return false;
+                } else {
+                    return true;
                 }
             }
 
