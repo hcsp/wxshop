@@ -86,7 +86,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
     "groupTitle": "商品"
   },
   {
@@ -179,7 +179,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
     "groupTitle": "商品"
   },
   {
@@ -289,7 +289,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
     "groupTitle": "商品"
   },
   {
@@ -357,7 +357,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
     "groupTitle": "商品"
   },
   {
@@ -464,7 +464,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/GoodsController.java",
     "groupTitle": "商品"
   },
   {
@@ -537,7 +537,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShopController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShopController.java",
     "groupTitle": "店铺"
   },
   {
@@ -619,7 +619,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShopController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShopController.java",
     "groupTitle": "店铺"
   },
   {
@@ -722,7 +722,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShopController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShopController.java",
     "groupTitle": "店铺"
   },
   {
@@ -779,7 +779,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShopController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShopController.java",
     "groupTitle": "店铺"
   },
   {
@@ -875,7 +875,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShopController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShopController.java",
     "groupTitle": "店铺"
   },
   {
@@ -953,7 +953,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/AuthController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/AuthController.java",
     "groupTitle": "登录与鉴权"
   },
   {
@@ -1044,7 +1044,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/AuthController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/AuthController.java",
     "groupTitle": "登录与鉴权"
   },
   {
@@ -1102,7 +1102,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/AuthController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/AuthController.java",
     "groupTitle": "登录与鉴权"
   },
   {
@@ -1178,7 +1178,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/AuthController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/AuthController.java",
     "groupTitle": "登录与鉴权"
   },
   {
@@ -1231,7 +1231,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 201 Created\n{\n  \"data\": {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"PENDING\",\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n}",
+          "content": "HTTP/1.1 201 Created\n{\n  \"data\": {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"pending\",\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n}",
           "type": "json"
         }
       ]
@@ -1268,7 +1268,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/OrderController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/OrderController.java",
     "groupTitle": "订单"
   },
   {
@@ -1305,7 +1305,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 204 No Content\n{\n  \"data\": {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"PENDING\",\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n}",
+          "content": "HTTP/1.1 204 No Content\n{\n  \"data\": {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"pending\",\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n}",
           "type": "json"
         }
       ]
@@ -1348,7 +1348,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/OrderController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/OrderController.java",
     "groupTitle": "订单"
   },
   {
@@ -1391,11 +1391,11 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "allowedValues": [
-              "PENDING/PAID/DELIVERED/RECEIVED"
+              "pending/paid/delivered/received"
             ],
             "optional": true,
             "field": "status",
-            "description": "<p>订单状态：PENDING 待付款 PAID 已付款 DELIVERED 物流中 RECEIVED 已收货</p>"
+            "description": "<p>订单状态：pending 待付款 paid 已付款 delivered 物流中 received 已收货</p>"
           }
         ]
       }
@@ -1436,7 +1436,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"pageNum\": 1,\n  \"pageSize\": 10,\n  \"totalPage\": 5,\n  \"data\": [\n     {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"PENDING\",\n      \"totalPrice\": 10000,\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    },\n    {\n         ...\n    }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"pageNum\": 1,\n  \"pageSize\": 10,\n  \"totalPage\": 5,\n  \"data\": [\n     {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"pending\",\n      \"totalPrice\": 10000,\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    },\n    {\n         ...\n    }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -1461,7 +1461,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/OrderController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/OrderController.java",
     "groupTitle": "订单"
   },
   {
@@ -1525,7 +1525,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"data\": {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"PENDING\",\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"data\": {\n      \"id\": 12345,\n      \"expressCompany\": null,\n      \"expressId\": null,\n      \"status\": \"pending\",\n      \"address\": \"XXX\",\n      \"shop\": {\n         \"id\": 12345,\n         \"name\": \"我的店铺\",\n         \"description\": \"我的苹果专卖店\",\n         \"imgUrl\": \"https://img.url\",\n         \"ownerUserId\": 12345,\n         \"createdAt\": \"2020-03-22T13:22:03Z\",\n         \"updatedAt\": \"2020-03-22T13:22:03Z\"\n       },\n       \"goods\": [\n         {\n             \"id\": 12345,\n             \"name\": \"肥皂\",\n             \"description\": \"纯天然无污染肥皂\",\n             \"details\": \"这是一块好肥皂\",\n             \"imgUrl\": \"https://img.url\",\n             \"address\": \"XXX\",\n             \"price\": 500,\n             \"number\": 10,\n             \"createdAt\": \"2020-03-22T13:22:03Z\",\n             \"updatedAt\": \"2020-03-22T13:22:03Z\"\n         },\n         {\n               ...\n         }\n      ]\n    }\n}",
           "type": "json"
         }
       ]
@@ -1568,7 +1568,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/OrderController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/OrderController.java",
     "groupTitle": "订单"
   },
   {
@@ -1658,7 +1658,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShoppingCartController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShoppingCartController.java",
     "groupTitle": "购物车"
   },
   {
@@ -1733,7 +1733,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShoppingCartController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShoppingCartController.java",
     "groupTitle": "购物车"
   },
   {
@@ -1836,7 +1836,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "src/main/java/com/hcsp/wxshop/controller/ShoppingCartController.java",
+    "filename": "wxshop-main/src/main/java/com/hcsp/wxshop/controller/ShoppingCartController.java",
     "groupTitle": "购物车"
   }
 ] });

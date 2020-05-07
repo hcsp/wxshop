@@ -40,7 +40,7 @@ public class OrderController {
      *
      * @apiParam {Number} pageNum 页数，从1开始
      * @apiParam {Number} pageSize 每页显示的数量
-     * @apiParam {String=PENDING/PAID/DELIVERED/RECEIVED} [status] 订单状态：PENDING 待付款 PAID 已付款 DELIVERED 物流中 RECEIVED 已收货
+     * @apiParam {String=pending/paid/delivered/received} [status] 订单状态：pending 待付款 paid 已付款 delivered 物流中 received 已收货
      *
      * @apiSuccess {Number} pageNum 页数，从1开始
      * @apiSuccess {Number} pageSize 每页显示的数量
@@ -58,7 +58,7 @@ public class OrderController {
      *           "id": 12345,
      *           "expressCompany": null,
      *           "expressId": null,
-     *           "status": "PENDING",
+     *           "status": "pending",
      *           "totalPrice": 10000,
      *           "address": "XXX",
      *           "shop": {
@@ -152,7 +152,7 @@ public class OrderController {
      *           "id": 12345,
      *           "expressCompany": null,
      *           "expressId": null,
-     *           "status": "PENDING",
+     *           "status": "pending",
      *           "address": "XXX",
      *           "shop": {
      *              "id": 12345,
@@ -236,7 +236,7 @@ public class OrderController {
      *           "id": 12345,
      *           "expressCompany": null,
      *           "expressId": null,
-     *           "status": "PENDING",
+     *           "status": "pending",
      *           "address": "XXX",
      *           "shop": {
      *              "id": 12345,
@@ -312,7 +312,7 @@ public class OrderController {
      *           "id": 12345,
      *           "expressCompany": null,
      *           "expressId": null,
-     *           "status": "PENDING",
+     *           "status": "pending",
      *           "address": "XXX",
      *           "shop": {
      *              "id": 12345,
