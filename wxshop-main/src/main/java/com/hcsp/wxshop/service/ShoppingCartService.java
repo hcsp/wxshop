@@ -1,11 +1,11 @@
 package com.hcsp.wxshop.service;
 
 import com.hcsp.api.DataStatus;
+import com.hcsp.api.data.PageResponse;
+import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.wxshop.controller.ShoppingCartController;
 import com.hcsp.wxshop.dao.ShoppingCartQueryMapper;
 import com.hcsp.wxshop.entity.GoodsWithNumber;
-import com.hcsp.api.exceptions.HttpException;
-import com.hcsp.api.data.PageResponse;
 import com.hcsp.wxshop.entity.ShoppingCartData;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.generate.GoodsMapper;
@@ -61,6 +61,7 @@ public class ShoppingCartService {
                 .values()
                 .stream()
                 .map(this::merge)
+                .filter(Objects::nonNull)
                 .collect(toList());
 
         int totalPage = totalNum % pageSize == 0 ? totalNum / pageSize : totalNum / pageSize + 1;
@@ -68,6 +69,9 @@ public class ShoppingCartService {
     }
 
     private ShoppingCartData merge(List<ShoppingCartData> goodsOfSameShop) {
+        if (goodsOfSameShop.isEmpty()) {
+            return null;
+        }
         ShoppingCartData result = new ShoppingCartData();
         result.setShop(goodsOfSameShop.get(0).getShop());
         List<GoodsWithNumber> goods = goodsOfSameShop.stream()

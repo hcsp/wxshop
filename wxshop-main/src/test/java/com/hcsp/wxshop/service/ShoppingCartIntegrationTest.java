@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
@@ -108,6 +109,24 @@ public class ShoppingCartIntegrationTest extends AbstractIntegrationTest {
                 shop1Data.getGoods().stream().map(Goods::getId).collect(toList()));
         Assertions.assertEquals(Sets.newHashSet(1, 100),
                 shop1Data.getGoods().stream().map(GoodsWithNumber::getNumber).collect(toSet()));
+    }
+
+    @Test
+    public void canDeleteAllShoppingCartData() throws Exception {
+        UserLoginResponse loginResponse = loginAndGetCookie();
+
+        List<Long> ids = Arrays.asList(1L, 4L, 5L);
+        for (Long id : ids) {
+            Response<ShoppingCartData> response = doHttpRequest("/api/v1/shoppingCart/" + id,
+                    "DELETE", null, loginResponse.cookie)
+                    .assertOkStatusCode()
+                    .asJsonObject(new TypeReference<Response<ShoppingCartData>>() {
+                    });
+        }
+        PageResponse<ShoppingCartData> getResponse = doHttpRequest("/api/v1/shoppingCart?pageNum=1&pageSize=10",
+                "GET", null, loginResponse.cookie).asJsonObject(new TypeReference<PageResponse<ShoppingCartData>>() {
+        });
+        Assertions.assertEquals(0, getResponse.getData().size());
     }
 
     @Test
