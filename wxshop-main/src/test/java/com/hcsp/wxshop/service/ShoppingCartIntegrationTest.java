@@ -126,5 +126,17 @@ public class ShoppingCartIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals(4L, goods.getId());
         Assertions.assertEquals(200, goods.getNumber());
         Assertions.assertEquals(DataStatus.OK.toString().toLowerCase(), goods.getStatus());
+
+        PageResponse<ShoppingCartData> getResponse = doHttpRequest("/api/v1/shoppingCart?pageNum=1&pageSize=10",
+                "GET", null, loginResponse.cookie).asJsonObject(new TypeReference<PageResponse<ShoppingCartData>>() {
+        });
+
+        // 两家店铺各有一个
+        Assertions.assertEquals(2, getResponse.getData().size());
+        Assertions.assertEquals(1, getResponse.getTotalPage());
+        Assertions.assertEquals(1, getResponse.getData().get(0).getGoods().size());
+        Assertions.assertEquals(1, getResponse.getData().get(1).getGoods().size());
+        Assertions.assertEquals(1L, getResponse.getData().get(0).getGoods().get(0).getId());
+        Assertions.assertEquals(4L, getResponse.getData().get(1).getGoods().get(0).getId());
     }
 }
