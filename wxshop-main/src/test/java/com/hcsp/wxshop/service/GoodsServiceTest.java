@@ -1,8 +1,8 @@
 package com.hcsp.wxshop.service;
 
 import com.hcsp.api.DataStatus;
-import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.api.data.PageResponse;
+import com.hcsp.api.exceptions.HttpException;
 import com.hcsp.wxshop.generate.Goods;
 import com.hcsp.wxshop.generate.GoodsMapper;
 import com.hcsp.wxshop.generate.Shop;
@@ -143,12 +143,5 @@ class GoodsServiceTest {
         assertEquals(5, result.getPageNum());
         assertEquals(10, result.getPageSize());
         assertEquals(mockData, result.getData());
-    }
-
-    @Test
-    public void updateGoodsSucceed() {
-        when(shop.getOwnerUserId()).thenReturn(1L);
-        when(goodsMapper.updateByExample(any(), any())).thenReturn(1);
-        assertEquals(goods, goodsService.updateGoods(goods));
     }
 }

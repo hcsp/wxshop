@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -134,6 +135,7 @@ public class GoodsController {
 
     /**
      * 根据id获取商品
+     *
      * @param shopId id
      * @return 指定id的商品
      */
@@ -266,11 +268,11 @@ public class GoodsController {
     /**
      *
      * @param goods
-     * @param response
      * @return 更新后的结果
      */
     // @formatter:on
-    public Response<Goods> updateGoods(Goods goods, HttpServletResponse response) {
+    @RequestMapping(value = "/goods/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
+    public Response<Goods> updateGoods(@RequestBody Goods goods) {
         return Response.of(goodsService.updateGoods(goods));
     }
 
