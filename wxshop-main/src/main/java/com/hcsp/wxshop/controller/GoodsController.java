@@ -267,13 +267,14 @@ public class GoodsController {
      */
     /**
      *
+     * @param id
      * @param goods
      * @return 更新后的结果
      */
     // @formatter:on
     @RequestMapping(value = "/goods/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
-    public Response<Goods> updateGoods(@RequestBody Goods goods) {
-        return Response.of(goodsService.updateGoods(goods));
+    public Response<Goods> updateGoods(@PathVariable("id")long id, @RequestBody Goods goods) {
+        return Response.of(goodsService.updateGoods(id, goods));
     }
 
     // @formatter:off

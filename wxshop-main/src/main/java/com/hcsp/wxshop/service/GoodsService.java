@@ -47,11 +47,11 @@ public class GoodsService {
         }
     }
 
-    public Goods updateGoods(Goods goods) {
+    public Goods updateGoods(long id, Goods goods) {
         Shop shop = shopMapper.selectByPrimaryKey(goods.getShopId());
 
         if (Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
-            Goods goodsInDb = goodsMapper.selectByPrimaryKey(goods.getId());
+            Goods goodsInDb = goodsMapper.selectByPrimaryKey(id);
             if (goodsInDb == null) {
                 throw HttpException.notFound("未找到");
             }
