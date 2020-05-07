@@ -92,7 +92,12 @@ public class OrderService {
         order.setUserId(userId);
         order.setShopId(new ArrayList<>(idToGoodsMap.values()).get(0).getShopId());
         order.setStatus(DataStatus.PENDING.getName());
-        order.setAddress(userMapper.selectByPrimaryKey(userId).getAddress());
+
+        String address = orderInfo.getAddress() == null ?
+                userMapper.selectByPrimaryKey(userId).getAddress() :
+                orderInfo.getAddress();
+
+        order.setAddress(address);
         order.setTotalPrice(calculateTotalPrice(orderInfo, idToGoodsMap));
 
         return orderRpcService.createOrder(orderInfo, order);

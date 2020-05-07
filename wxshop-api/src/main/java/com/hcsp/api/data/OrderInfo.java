@@ -5,7 +5,16 @@ import java.util.List;
 
 public class OrderInfo implements Serializable {
     private long orderId;
+    private String address;
     private List<GoodsInfo> goods;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public long getOrderId() {
         return orderId;
