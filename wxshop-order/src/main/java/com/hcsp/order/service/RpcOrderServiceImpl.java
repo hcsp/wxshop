@@ -52,8 +52,16 @@ public class RpcOrderServiceImpl implements OrderRpcService {
     }
 
     @Override
-    public Order getOrderById(long orderId) {
-        return orderMapper.selectByPrimaryKey(orderId);
+    public RpcOrderGoods getOrderById(long orderId) {
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if (order == null) {
+            return null;
+        }
+        List<GoodsInfo> goodsInfo = myOrderMapper.getGoodsInfoOfOrder(orderId);
+        RpcOrderGoods result = new RpcOrderGoods();
+        result.setGoods(goodsInfo);
+        result.setOrder(order);
+        return result;
     }
 
     @Override

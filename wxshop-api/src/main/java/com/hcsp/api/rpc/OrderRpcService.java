@@ -9,7 +9,7 @@ import com.hcsp.api.generate.Order;
 public interface OrderRpcService {
     Order createOrder(OrderInfo orderInfo, Order order);
 
-    Order getOrderById(long orderId);
+    RpcOrderGoods getOrderById(long orderId);
 
     RpcOrderGoods deleteOrder(long orderId, long userId);
 

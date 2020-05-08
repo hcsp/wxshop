@@ -105,11 +105,11 @@ public class OrderController {
     // @formatter:on
 
     /**
-     * 获取订单
+     * 分页获取订单
      * @param pageNum
      * @param pageSize
      * @param status
-     * @return 分页的订单
+     * @return 结果
      */
     @GetMapping("/order")
     public PageResponse<OrderResponse> getOrder(@RequestParam("pageNum") Integer pageNum,
@@ -120,6 +120,16 @@ public class OrderController {
         }
 
         return orderService.getOrder(UserContext.getCurrentUser().getId(), pageNum, pageSize, DataStatus.fromStatus(status));
+    }
+
+    /**
+     * 根据id获取订单
+     * @param id
+     * @return 订单
+     */
+    @GetMapping("/order/{id}")
+    public Response<OrderResponse> getOrderById(@PathVariable("id") long id) {
+        return Response.of(orderService.getOrderById(UserContext.getCurrentUser().getId(), id));
     }
 
 
@@ -287,7 +297,8 @@ public class OrderController {
      * @return 更新后的订单
      */
     @RequestMapping(value = "/order/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
-    public Response<OrderResponse> updateOrder(@PathVariable("id") Integer id, @RequestBody Order order) {
+    public Response<OrderResponse> updateOrder(@PathVariable("id") long id, @RequestBody Order order) {
+        order.setId(id);
         if (order.getExpressCompany() != null) {
             return Response.of(orderService.updateExpressInformation(order, UserContext.getCurrentUser().getId()));
         } else {

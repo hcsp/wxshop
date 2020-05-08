@@ -16,7 +16,6 @@ import com.hcsp.wxshop.generate.Shop;
 import com.hcsp.wxshop.generate.ShopMapper;
 import com.hcsp.wxshop.generate.UserMapper;
 import org.apache.dubbo.config.annotation.Reference;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,19 +42,15 @@ public class OrderService {
 
     private ShopMapper shopMapper;
 
-    private SqlSessionFactory sqlSessionFactory;
-
     @Autowired
     public OrderService(UserMapper userMapper,
                         GoodsStockMapper goodsStockMapper,
                         ShopMapper shopMapper,
-                        GoodsService goodsService,
-                        SqlSessionFactory sqlSessionFactory) {
+                        GoodsService goodsService) {
         this.userMapper = userMapper;
         this.shopMapper = shopMapper;
         this.goodsService = goodsService;
         this.goodsStockMapper = goodsStockMapper;
-        this.sqlSessionFactory = sqlSessionFactory;
     }
 
     public OrderResponse createOrder(OrderInfo orderInfo, Long userId) {
@@ -177,19 +172,7 @@ public class OrderService {
     }
 
     public OrderResponse updateExpressInformation(Order order, long userId) {
-        Order orderInDatabase = orderRpcService.getOrderById(order.getId());
-        if (orderInDatabase == null) {
-            throw HttpException.notFound("订单未找到: " + order.getId());
-        }
-
-        Shop shop = shopMapper.selectByPrimaryKey(orderInDatabase.getShopId());
-        if (shop == null) {
-            throw HttpException.notFound("店铺未找到: " + orderInDatabase.getShopId());
-        }
-
-        if (shop.getOwnerUserId() != userId) {
-            throw HttpException.forbidden("无权访问！");
-        }
+        doGetOrderById(userId, order.getId());
 
         Order copy = new Order();
         copy.setId(order.getId());
@@ -199,17 +182,32 @@ public class OrderService {
     }
 
     public OrderResponse updateOrderStatus(Order order, long userId) {
-        Order orderInDatabase = orderRpcService.getOrderById(order.getId());
-        if (orderInDatabase == null) {
-            throw HttpException.notFound("订单未找到: " + order.getId());
-        }
-
-        if (orderInDatabase.getUserId() != userId) {
-            throw HttpException.forbidden("无权访问！");
-        }
+        doGetOrderById(userId, order.getId());
 
         Order copy = new Order();
+        copy.setId(order.getId());
         copy.setStatus(order.getStatus());
         return toOrderResponse(orderRpcService.updateOrder(copy));
+    }
+
+    public RpcOrderGoods doGetOrderById(long userId, long orderId) {
+        RpcOrderGoods orderInDatabase = orderRpcService.getOrderById(orderId);
+        if (orderInDatabase == null) {
+            throw HttpException.notFound("订单未找到: " + orderId);
+        }
+
+        Shop shop = shopMapper.selectByPrimaryKey(orderInDatabase.getOrder().getShopId());
+        if (shop == null) {
+            throw HttpException.notFound("店铺未找到: " + orderInDatabase.getOrder().getShopId());
+        }
+
+        if (shop.getOwnerUserId() != userId && orderInDatabase.getOrder().getUserId() != userId) {
+            throw HttpException.forbidden("无权访问！");
+        }
+        return orderInDatabase;
+    }
+
+    public OrderResponse getOrderById(long userId, long orderId) {
+        return toOrderResponse(doGetOrderById(userId, orderId));
     }
 }

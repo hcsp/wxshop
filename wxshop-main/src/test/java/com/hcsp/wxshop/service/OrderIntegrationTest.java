@@ -48,14 +48,7 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
     void setUp() {
         MockitoAnnotations.initMocks(mockOrderRpcService);
 
-        when(mockOrderRpcService.orderRpcService.createOrder(any(), any())).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Order order = invocation.getArgument(1);
-                order.setId(1234L);
-                return order;
-            }
-        });
+
     }
 
     @Test
@@ -73,7 +66,17 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
 
         orderInfo.setGoods(Arrays.asList(goodsInfo1, goodsInfo2));
 
+        when(mockOrderRpcService.orderRpcService.createOrder(any(), any())).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                Order order = invocation.getArgument(1);
+                order.setId(1234L);
+                return order;
+            }
+        });
+
         Response<OrderResponse> response = doHttpRequest("/api/v1/order", "POST", orderInfo, loginResponse.cookie)
+                .assertOkStatusCode()
                 .asJsonObject(new TypeReference<Response<OrderResponse>>() {
                 });
 
@@ -90,6 +93,28 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals(Arrays.asList(3, 5),
                 response.getData().getGoods().stream().map(GoodsWithNumber::getNumber).collect(toList())
         );
+
+        // 现在获取刚刚创建的订单
+        RpcOrderGoods mockRpcOrderGoods = new RpcOrderGoods();
+        Order order = new Order();
+        order.setId(12345L);
+        order.setUserId(1L);
+        order.setShopId(2L);
+        mockRpcOrderGoods.setOrder(order);
+        mockRpcOrderGoods.setGoods(Arrays.asList(goodsInfo1, goodsInfo2));
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(mockRpcOrderGoods);
+
+        Response<OrderResponse> getResponse = doHttpRequest("/api/v1/order/12345", "GET", null, loginResponse.cookie)
+                .assertOkStatusCode()
+                .asJsonObject(new TypeReference<Response<OrderResponse>>() {
+                });
+        Assertions.assertEquals(12345L, getResponse.getData().getId());
+        Assertions.assertEquals(2L, getResponse.getData().getShopId());
+        Assertions.assertEquals(2L, getResponse.getData().getShop().getId());
+        Assertions.assertEquals(Arrays.asList(4L, 5L),
+                getResponse.getData().getGoods().stream().map(GoodsWithNumber::getId).collect(toList()));
+        Assertions.assertEquals(Arrays.asList(3, 5),
+                getResponse.getData().getGoods().stream().map(GoodsWithNumber::getNumber).collect(toList()));
     }
 
     @Test
@@ -181,11 +206,15 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         orderUpdateRequest.setExpressCompany("顺丰");
         orderUpdateRequest.setExpressId("SF12345678");
 
+        RpcOrderGoods rpcOrderGoods = new RpcOrderGoods();
+
         Order orderInDB = new Order();
         orderInDB.setId(12345L);
         orderInDB.setShopId(2L);
 
-        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(orderInDB);
+        rpcOrderGoods.setOrder(orderInDB);
+
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(rpcOrderGoods);
         when(mockOrderRpcService.orderRpcService.updateOrder(any())).thenReturn(
                 mockRpcOderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.DELIVERED)
         );
@@ -211,11 +240,14 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
         orderUpdateRequest.setId(12345L);
         orderUpdateRequest.setStatus(DataStatus.RECEIVED.getName());
 
+        RpcOrderGoods rpcOrderGoods = new RpcOrderGoods();
         Order orderInDB = new Order();
         orderInDB.setId(12345L);
         orderInDB.setUserId(1L);
+        orderInDB.setShopId(2L);
+        rpcOrderGoods.setOrder(orderInDB);
 
-        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(orderInDB);
+        when(mockOrderRpcService.orderRpcService.getOrderById(12345L)).thenReturn(rpcOrderGoods);
         when(mockOrderRpcService.orderRpcService.updateOrder(any())).thenReturn(
                 mockRpcOderGoods(12345L, 1L, 3L, 2L, 10, DataStatus.RECEIVED)
         );

@@ -227,14 +227,12 @@ public class ShopController {
      * 更新店铺的信息
      * @param id
      * @param shop
-     * @param response
      * @return 更新后的店铺
      */
     // @formatter:on
     @PatchMapping("/shop/{id}")
     public Response<Shop> updateShop(@PathVariable("id") Long id,
-                                     @RequestBody Shop shop,
-                                     HttpServletResponse response) {
+                                     @RequestBody Shop shop) {
         shop.setId(id);
         return Response.of(shopService.updateShop(shop, UserContext.getCurrentUser().getId()));
     }
