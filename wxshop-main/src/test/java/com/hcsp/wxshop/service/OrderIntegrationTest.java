@@ -47,8 +47,6 @@ public class OrderIntegrationTest extends AbstractIntegrationTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(mockOrderRpcService);
-
-
     }
 
     @Test
