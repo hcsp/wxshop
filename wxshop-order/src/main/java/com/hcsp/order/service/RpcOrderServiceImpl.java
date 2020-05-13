@@ -92,7 +92,7 @@ public class RpcOrderServiceImpl implements OrderRpcService {
                                                 Integer pageSize,
                                                 DataStatus status) {
         OrderExample countByStatus = new OrderExample();
-        setStatus(countByStatus, status);
+        setStatus(countByStatus, status).andUserIdEqualTo(userId);
         int count = (int) orderMapper.countByExample(countByStatus);
 
         OrderExample pagedOrder = new OrderExample();
@@ -101,12 +101,7 @@ public class RpcOrderServiceImpl implements OrderRpcService {
         setStatus(pagedOrder, status).andUserIdEqualTo(userId);
 
         List<Order> orders = orderMapper.selectByExample(pagedOrder);
-
-        List<Long> orderIds = orders.stream().map(Order::getId).collect(toList());
-
-        OrderGoodsExample selectByOrderIds = new OrderGoodsExample();
-        selectByOrderIds.createCriteria().andOrderIdIn(orderIds);
-        List<OrderGoods> orderGoods = orderGoodsMapper.selectByExample(selectByOrderIds);
+        List<OrderGoods> orderGoods = getOrderGoods(orders);
 
         int totalPage = count % pageSize == 0 ? count / pageSize : count / pageSize + 1;
 
@@ -122,6 +117,18 @@ public class RpcOrderServiceImpl implements OrderRpcService {
                 pageSize,
                 totalPage,
                 rpcOrderGoods);
+    }
+
+    private List<OrderGoods> getOrderGoods(List<Order> orders) {
+        if (orders.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<Long> orderIds = orders.stream().map(Order::getId).collect(toList());
+
+        OrderGoodsExample selectByOrderIds = new OrderGoodsExample();
+        selectByOrderIds.createCriteria().andOrderIdIn(orderIds);
+        return orderGoodsMapper.selectByExample(selectByOrderIds);
     }
 
     @Override

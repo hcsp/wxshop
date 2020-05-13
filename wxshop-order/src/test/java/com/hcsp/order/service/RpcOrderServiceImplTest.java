@@ -93,6 +93,13 @@ public class RpcOrderServiceImplTest {
     }
 
     @Test
+    public void canGetEmptyOrderList() {
+        PageResponse<RpcOrderGoods> result = rpcOrderService.getOrder(8888L, 2, 1, null);
+        Assertions.assertEquals(0, result.getData().size());
+        Assertions.assertEquals(0, result.getTotalPage());
+    }
+
+    @Test
     public void getOrderByPageTest() {
         PageResponse<RpcOrderGoods> result = rpcOrderService.getOrder(1L, 2, 1, null);
 
