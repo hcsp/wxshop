@@ -72,15 +72,13 @@ public class GoodsService {
     }
 
     public Goods deleteGoodsById(Long goodsId) {
-        Goods goodsInfo = goodsMapper.selectByPrimaryKey(goodsId);
-        Shop shop = shopMapper.selectByPrimaryKey(goodsInfo.getShopId());
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        if (goods == null) {
+            throw HttpException.notFound("商品未找到！");
+        }
+        Shop shop = shopMapper.selectByPrimaryKey(goods.getShopId());
 
-        if (shop == null || Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
-            Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-            if (goods == null) {
-                throw HttpException.notFound("商品未找到！");
-            }
-
+        if (shop != null && Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
             goods.setStatus(DataStatus.DELETED.getName());
             goodsMapper.updateByPrimaryKey(goods);
             return goods;

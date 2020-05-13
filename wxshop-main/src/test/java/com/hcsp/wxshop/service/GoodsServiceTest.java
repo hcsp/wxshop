@@ -79,7 +79,6 @@ class GoodsServiceTest {
     public void throwExceptionIfGoodsNotFound() {
         long goodsToBeDeleted = 123;
 
-        when(shop.getOwnerUserId()).thenReturn(1L);
         when(goodsMapper.selectByPrimaryKey(goodsToBeDeleted)).thenReturn(null);
         HttpException thrownException = assertThrows(HttpException.class, () -> {
             goodsService.deleteGoodsById(goodsToBeDeleted);
@@ -93,6 +92,7 @@ class GoodsServiceTest {
         long goodsToBeDeleted = 123;
 
         when(shop.getOwnerUserId()).thenReturn(2L);
+        when(goodsMapper.selectByPrimaryKey(goodsToBeDeleted)).thenReturn(goods);
         HttpException thrownException = assertThrows(HttpException.class, () -> {
             goodsService.deleteGoodsById(goodsToBeDeleted);
         });
