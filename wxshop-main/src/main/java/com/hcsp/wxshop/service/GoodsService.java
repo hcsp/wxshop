@@ -72,7 +72,8 @@ public class GoodsService {
     }
 
     public Goods deleteGoodsById(Long goodsId) {
-        Shop shop = shopMapper.selectByPrimaryKey(goodsId);
+        Goods goodsInfo = goodsMapper.selectByPrimaryKey(goodsId);
+        Shop shop = shopMapper.selectByPrimaryKey(goodsInfo.getShopId());
 
         if (shop == null || Objects.equals(shop.getOwnerUserId(), UserContext.getCurrentUser().getId())) {
             Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
