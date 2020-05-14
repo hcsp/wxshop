@@ -49,13 +49,17 @@ public class ShiroConfig implements WebMvcConfigurer {
         registry.addInterceptor(new HandlerInterceptor() {
 
             private boolean isWhitelist(HttpServletRequest request) {
+                String uri = request.getRequestURI();
                 return Arrays.asList(
                         "/api/v1/code",
                         "/api/v1/login",
                         "/api/v1/status",
                         "/api/v1/logout",
-                        "/error"
-                ).contains(request.getRequestURI());
+                        "/error",
+                        "/",
+                        "/index.html",
+                        "/manifest.json"
+                ).contains(uri) || uri.startsWith("/static/");
             }
 
             @Override
