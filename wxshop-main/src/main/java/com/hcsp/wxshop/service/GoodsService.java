@@ -121,9 +121,9 @@ public class GoodsService {
         }
     }
 
-    public Goods getGoodsById(long shopId) {
+    public Goods getGoodsById(long goodsId) {
         GoodsExample okStatus = new GoodsExample();
-        okStatus.createCriteria().andIdEqualTo(shopId)
+        okStatus.createCriteria().andIdEqualTo(goodsId)
                 .andStatusEqualTo(DataStatus.OK.name());
         List<Goods> goods = goodsMapper.selectByExampleWithBLOBs(okStatus);
         if (goods.isEmpty()) {
