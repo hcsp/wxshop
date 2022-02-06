@@ -165,7 +165,7 @@ public class RpcOrderServiceImpl implements OrderRpcService {
         if (status == null) {
             return orderExample.createCriteria().andStatusNotEqualTo(DELETED.getName());
         } else {
-            return orderExample.createCriteria().andStatusNotEqualTo(status.getName());
+            return orderExample.createCriteria().andStatusEqualTo(status.getName());
         }
     }
 
