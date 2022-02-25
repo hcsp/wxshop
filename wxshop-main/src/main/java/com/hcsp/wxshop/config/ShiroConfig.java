@@ -14,6 +14,7 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -104,12 +105,12 @@ public class ShiroConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SecurityManager securityManager(ShiroRealm shiroRealm, RedisCacheManager cacheManager) {
+    public SecurityManager securityManager(ShiroRealm shiroRealm, RedisCacheManager cacheManager, DefaultWebSecurityManager redisSessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
         securityManager.setRealm(shiroRealm);
         securityManager.setCacheManager(cacheManager);
-        securityManager.setSessionManager(new DefaultWebSessionManager());
+        securityManager.setSessionManager(redisSessionManager);
         securityManager.setRememberMeManager(rememberMeManager());
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
@@ -125,10 +126,8 @@ public class ShiroConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public RedisCacheManager redisCacheManager() {
+    public RedisCacheManager redisCacheManager(RedisManager redisManager) {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(redisHost + ":" + redisPort);
         redisCacheManager.setRedisManager(redisManager);
         return redisCacheManager;
     }
@@ -138,4 +137,24 @@ public class ShiroConfig implements WebMvcConfigurer {
         return new ShiroRealm(verificationCodeCheckService);
     }
 
+    @Bean
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(redisHost + ":" + redisPort);
+        return redisManager;
+    }
+
+    @Bean
+    public RedisSessionDAO redisSessionDAO(RedisManager redisManager) {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager);
+        return redisSessionDAO;
+    }
+
+    @Bean
+    public DefaultWebSessionManager redisSessionManager(RedisSessionDAO redisSessionDAO) {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setSessionDAO(redisSessionDAO);
+        return defaultWebSessionManager;
+    }
 }
