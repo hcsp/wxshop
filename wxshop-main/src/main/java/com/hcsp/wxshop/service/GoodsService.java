@@ -127,7 +127,7 @@ public class GoodsService {
                 .andStatusEqualTo(DataStatus.OK.name());
         List<Goods> goods = goodsMapper.selectByExampleWithBLOBs(okStatus);
         if (goods.isEmpty()) {
-            throw HttpException.notFound("商品未找到：" + shopId);
+            throw HttpException.notFound("商品未找到：" + goodsId);
         }
         return goods.get(0);
     }
